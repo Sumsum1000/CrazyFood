@@ -1,0 +1,37 @@
+* {
+  margin: 0;
+  padding: 0;
+}
+html {
+  background-color: rgb(57, 57, 57);
+}
+
+a {
+  text-decoration: none;
+}
+
+$basic-margin: 20px;
+$basic-padding: 40px;
+$padding-s: 20px;
+$padding-xs: 10px;
+$padding-xs2: 5px;
+$basic-gap: 20px;
+$gap-s: 10px;
+$gap-xs: 5px;
+
+// Colors
+$dark: black;
+$light: white;
+
+$primery_1: rgb(222, 222, 222);
+$secondery_1: rgb(91, 79, 82);
+$secondery_2: rgb(220, 207, 210);
+
+//Fonts
+$s: 16px;
+$m: 20px;
+$l: 24px;
+$xl: 28px;
+$xl2: 40px;
+$xl3: 60px;
+$xl4: 80px;

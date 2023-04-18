@@ -1,0 +1,23 @@
+@import "./root.scss";
+
+.container {
+  display: flex;
+}
+
+.main {
+  flex: 10;
+  //border-left: 1px solid black;
+  //border-right: 1px solid black;
+}
+
+.side-l {
+  flex: 1;
+  height: 100vh;
+  //background-color: rgb(132, 62, 55);
+}
+
+.side-r {
+  flex: 1;
+  height: 100vh;
+  //background-color: salmon;
+}

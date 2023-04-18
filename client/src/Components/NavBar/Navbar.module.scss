@@ -1,0 +1,30 @@
+@import "../../root.scss";
+
+.navbar {
+  display: flex;
+  width: 100%;
+  height: 60px;
+  border-bottom: 1px solid $light;
+  align-items: center;
+  gap: $basic-gap;
+
+  box-sizing: border-box;
+  //padding: 0 $basic-padding;
+  z-index: 3;
+
+  background-color: none;
+
+  .nav-title {
+    margin-right: auto;
+    color: white;
+  }
+
+  .active {
+    color: $secondery_2;
+  }
+
+  .no-active {
+    color: rgb(0, 0, 0);
+    color: white;
+  }
+}
