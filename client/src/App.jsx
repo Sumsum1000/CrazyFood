@@ -4,7 +4,7 @@ import style from "./app.module.scss";
 
 import { Home } from "./Pages/HomePage/Home";
 import { SharedComponent } from "./Components/SharedComponent/SharedComponent";
-import { Recipe } from "./Components/Recipe/RecipeCard";
+import { RecipeCard } from "./Components/Recipe/RecipeCard";
 import { About } from "./Pages/About/About";
 import { Tags } from "./Pages/Tags/Tags";
 import { All } from "./Pages/All/All";

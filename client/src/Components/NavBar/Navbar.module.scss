@@ -2,12 +2,13 @@
 
 .navbar {
   display: flex;
-  width: 100%;
+  width: 83.3%;
   height: 60px;
   border-bottom: 1px solid $light;
   align-items: center;
   gap: $basic-gap;
-
+  position: fixed;
+  top: 0;
   box-sizing: border-box;
   //padding: 0 $basic-padding;
   z-index: 3;
