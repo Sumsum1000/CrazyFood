@@ -1,5 +1,7 @@
 import hamburger from "./Images/Hamburger2.jpg";
 
+export const tags = ["asain", "pasta", "beef", "chicken", "soups", "baking"];
+
 export const recipesArr = [
   {
     name: "Hamburger",

@@ -1,11 +1,12 @@
 import style from "./home.module.scss";
 import { RecipeCard } from "../../Components/Recipe/RecipeCard";
-import { FC, useEffect } from "react";
+import { FC, useEffect, useState } from "react";
 import { recipesArr } from "../../TempData";
 import { recipesStore } from "../../Store/_store";
 import { currentRecipeStore } from "../../Store/_store";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { tags } from "../../TempData.js";
 
 //import { Recipe } from "../../Store/types";
 //import { RootState } from "../../Store/types";
@@ -15,6 +16,7 @@ export const Home = () => {
 
   const { recipes, setRecipes } = recipesStore();
   const { currentRecipe, setCurrentRecipe } = currentRecipeStore();
+  const [currentTags, setCurrenTags] = useState({});
 
   const fetchRecipeByID = (id) => {
     axios({
@@ -31,8 +33,22 @@ export const Home = () => {
   }, []);
 
   useEffect(() => {
-    console.log("current: ", currentRecipe);
-  }, [currentRecipe]);
+    recipes.forEach(
+      async (element) =>
+        await element.tags.forEach((tag) => {
+          setCurrenTags((prevTags) => ({
+            ...prevTags,
+            [tag]: (prevTags[tag] || 0) + 1,
+          }));
+        })
+    );
+  }, []);
+
+  useEffect(() => {
+    console.log("current tags ", currentTags);
+
+    //Set Tags
+  }, [currentTags]);
 
   return (
     <div className={style["home-container"]}>
@@ -85,3 +101,10 @@ export const Home = () => {
     </div>
   );
 };
+
+const arr = [
+  { num: 1, tags: ["baking"] },
+  { num: 2, tags: ["asian"] },
+  { num: 3, tags: ["pasta", "chicken"] },
+  { num: 4, tags: ["soups"] },
+];
