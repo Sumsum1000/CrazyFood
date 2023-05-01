@@ -7,7 +7,7 @@ export const recipesStore = create((set) => ({
       name: "start",
       prepTime: 1.5,
       cookTime: 12,
-      tags: "tag",
+      tags: "",
       ingredients: ["pasta", "beef"],
       instructions: ["cut", "cook", "eat"],
     },

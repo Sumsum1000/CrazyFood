@@ -12,13 +12,21 @@ import { tags } from "../../TempData.js";
 //import { RootState } from "../../Store/types";
 
 export const Home = () => {
-  const recipesOnStart = recipesArr.slice(0, 6);
-
   const { recipes, setRecipes } = recipesStore();
   const { currentRecipe, setCurrentRecipe } = currentRecipeStore();
   const [currentTags, setCurrenTags] = useState({});
+  const [tagsArr, setTagsArr] = useState([]);
+  const [recipeStart, setRecipeStart] = useState([]);
 
   const fetchRecipeByID = (id) => {
+    // axios({
+    //   method: "get",
+    //   url: `http://localhost:8080/api/v1/recipes/${id}`,
+    // }).then((data) => setRecipes(data.data.recipes));
+    console.log("id ", id);
+  };
+
+  const fetchRecipe = (id) => {
     axios({
       method: "get",
       url: `http://localhost:8080/api/v1/recipes/${id}`,
@@ -32,22 +40,48 @@ export const Home = () => {
     }).then((data) => setRecipes(data.data.recipes));
   }, []);
 
+  // useEffect(() => {
+  //   //console.log("recipes ", recipes);
+  //   if (recipes !== null && recipes !== undefined) {
+  //     recipes.forEach(async (element) => {
+  //       for (const tag of element.tags) {
+  //         await Promise.all([
+  //           setCurrenTags((prevTags) => ({
+  //             ...prevTags,
+  //             [tag]: (prevTags[tag] || 0) + 1,
+  //           })),
+  //         ]);
+  //       }
+  //     });
+  //   }
+  // }, [recipes]);
+
   useEffect(() => {
-    recipes.forEach(
-      async (element) =>
-        await element.tags.forEach((tag) => {
+    if (recipes !== null && recipes !== undefined) {
+      for (let recipe of recipes) {
+        for (let tag of recipe.tags) {
           setCurrenTags((prevTags) => ({
             ...prevTags,
             [tag]: (prevTags[tag] || 0) + 1,
           }));
-        })
-    );
-  }, []);
+        }
+      }
+    }
+
+    // slice 6 recipes from all recipes for displaying on Home component
+    const tempArr = recipes.slice(0, 6);
+    setRecipeStart(tempArr);
+  }, [recipes]);
 
   useEffect(() => {
-    console.log("current tags ", currentTags);
-
-    //Set Tags
+    //console.log("current tags ", currentTags);
+    const tempArr = Object.keys(currentTags).map((key) => ({
+      tag: key,
+      quantity: currentTags[key],
+      id: Math.random(),
+    }));
+    //console.log("tempArr ", tempArr);
+    setTagsArr(tempArr);
   }, [currentTags]);
 
   return (
@@ -61,27 +95,22 @@ export const Home = () => {
         <div className={style["left"]}>
           <h1>Recipes</h1>
           <ul>
-            <li>
-              <p>Beef(4)</p>
-            </li>
-            <li>
-              <p>Breakfast(2)</p>
-            </li>
-            <li>
-              <p>Chicken(5)</p>
-            </li>
-            <li>
-              <p>Pasta(4)</p>
-            </li>
-            <li>
-              <p>Soups(1)</p>
-            </li>
+            {tagsArr &&
+              tagsArr.map((tag) => {
+                return (
+                  <li>
+                    <p>
+                      {tag.tag}({`${tag.quantity}`})
+                    </p>
+                  </li>
+                );
+              })}
           </ul>
         </div>
 
         <div className={style["recipes-container"]}>
           {/* recipesOnStart */}
-          {recipes.map((recipe) => {
+          {recipeStart.map((recipe) => {
             const url = `http://localhost:3000/all/${recipe._id}`;
             return (
               <Link to={url}>
@@ -91,7 +120,7 @@ export const Home = () => {
                   key={recipe._id}
                   prepTime={recipe.prepTime}
                   cookTime={recipe.cookTime}
-                  recipeHandler={(id) => fetchRecipeByID(id)}
+                  recipeHandler={(id) => fetchRecipe(id)}
                 />
               </Link>
             );

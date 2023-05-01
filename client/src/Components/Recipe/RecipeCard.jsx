@@ -28,10 +28,14 @@ export const RecipeCard = ({
   //   recipeHandler(e.id);
   // };
 
+  const onClickk = (id) => {
+    recipeHandler(id);
+  };
+
   return (
     <div
       id={id}
-      onClick={() => recipeHandler(id)}
+      onClick={() => onClickk(id)}
       className={style["recipe-container"]}
     >
       <div className={style["recipe-img-container"]}>
