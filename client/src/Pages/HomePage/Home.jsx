@@ -1,12 +1,10 @@
 import style from "./home.module.scss";
 import { RecipeCard } from "../../Components/Recipe/RecipeCard";
 import { FC, useEffect, useState } from "react";
-import { recipesArr } from "../../TempData";
 import { recipesStore } from "../../Store/_store";
 import { currentRecipeStore } from "../../Store/_store";
 import axios from "axios";
 import { Link } from "react-router-dom";
-import { tags } from "../../TempData.js";
 
 //import { Recipe } from "../../Store/types";
 //import { RootState } from "../../Store/types";

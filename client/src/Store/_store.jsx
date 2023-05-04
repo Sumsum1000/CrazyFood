@@ -28,3 +28,12 @@ export const currentRecipeStore = create((set) => ({
     set((state) => ({ currentRecipe: recipe }));
   },
 }));
+
+export const selectedTagStore = create((set) => ({
+  selectedTag: {
+    tag: "",
+  },
+  setSelectedTag: (tag) => {
+    set((state) => ({ selectedTag: tag }));
+  },
+}));
