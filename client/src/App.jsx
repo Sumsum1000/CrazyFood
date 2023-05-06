@@ -22,7 +22,7 @@ function App() {
             <Route path="/" element={<SharedComponent />}>
               <Route index element={<Home />} />
               <Route path="/about" element={<About />} />
-              <Route path="/tags" element={<Tags />} />
+              <Route path="/tags/:tag" element={<Tags />} />
               <Route path="/all" element={<All />} />
               <Route path="/all/:id" element={<RecipeDetails />} />
             </Route>

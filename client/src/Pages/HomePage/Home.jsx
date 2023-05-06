@@ -5,6 +5,8 @@ import { recipesStore } from "../../Store/_store";
 import { currentRecipeStore } from "../../Store/_store";
 import axios from "axios";
 import { Link } from "react-router-dom";
+import { Tag } from "../../Components/Tags/Tag";
+import { selectedTagStore } from "../../Store/_store";
 
 //import { Recipe } from "../../Store/types";
 //import { RootState } from "../../Store/types";
@@ -12,6 +14,7 @@ import { Link } from "react-router-dom";
 export const Home = () => {
   const { recipes, setRecipes } = recipesStore();
   const { currentRecipe, setCurrentRecipe } = currentRecipeStore();
+  const { selectedTag, setSelectedTag } = selectedTagStore();
   const [currentTags, setCurrenTags] = useState({});
   const [tagsArr, setTagsArr] = useState([]);
   const [recipeStart, setRecipeStart] = useState([]);
@@ -96,11 +99,16 @@ export const Home = () => {
             {tagsArr &&
               tagsArr.map((tag) => {
                 return (
-                  <li>
-                    <p>
-                      {tag.tag}({`${tag.quantity}`})
-                    </p>
-                  </li>
+                  <Link to={`/tags/${tag.tag}`}>
+                    <li>
+                      <Tag
+                        id={Math.random()}
+                        tagHandler={() => setSelectedTag(tag.tag)}
+                        tagName={tag.tag}
+                        tagQuantity={tag.quantity}
+                      />
+                    </li>
+                  </Link>
                 );
               })}
           </ul>

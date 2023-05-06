@@ -2,7 +2,7 @@ import style from "./Navbar.module.scss";
 import { NavLink } from "react-router-dom";
 
 export const NavBar = () => {
-  const links = ["all", "tags", "about"];
+  const links = ["all", "about"]; //"tags"
 
   return (
     <nav className={style["navbar"]}>
