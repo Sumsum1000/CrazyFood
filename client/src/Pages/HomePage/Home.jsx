@@ -118,15 +118,20 @@ export const Home = () => {
           {/* recipesOnStart */}
           {recipeStart.map((recipe) => {
             const url = `http://localhost:3000/all/${recipe._id}`;
+            let temp;
             return (
               <Link to={url}>
                 <RecipeCard
                   title={recipe.name}
                   id={recipe._id}
                   key={recipe._id}
+                  onClick={() =>
+                    setCurrentRecipe(
+                      recipes.filter((item) => item._id === recipe._id)
+                    )
+                  }
                   prepTime={recipe.prepTime}
                   cookTime={recipe.cookTime}
-                  recipeHandler={(id) => fetchRecipe(id)}
                 />
               </Link>
             );

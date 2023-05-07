@@ -16,7 +16,7 @@ export const RecipeDetails = () => {
 
   return (
     <>
-      <h2 className={style["details-title"]}>{currentRecipe.name}</h2>
+      <h2 className={style["details-title"]}>{currentRecipe[0].name}</h2>
       <div className={style["details-container"]}>
         {/* <h1>ID: {coctailId}</h1> */}
         <div className={style["left-container"]}>
@@ -26,7 +26,7 @@ export const RecipeDetails = () => {
         </div>
         <div className={style["right-container"]}>
           <section>
-            <p>{currentRecipe.description}</p>
+            <p>{currentRecipe[0].description}</p>
           </section>
         </div>
 
@@ -35,7 +35,7 @@ export const RecipeDetails = () => {
           <h3>Ingradients</h3>
           <ul>
             {currentRecipe ? (
-              currentRecipe.ingradients.map((ingredient) => {
+              currentRecipe[0].ingradients.map((ingredient) => {
                 return <li>{ingredient}</li>;
               })
             ) : (
@@ -47,7 +47,7 @@ export const RecipeDetails = () => {
           <h3>Instructions</h3>
           <ul>
             {currentRecipe ? (
-              currentRecipe.instructions.map((step) => {
+              currentRecipe[0].instructions.map((step) => {
                 return <li>{step}</li>;
               })
             ) : (

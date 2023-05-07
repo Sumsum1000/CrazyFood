@@ -20,8 +20,9 @@ export const currentRecipeStore = create((set) => ({
     name: "start",
     prepTime: 1.5,
     cookTime: 12,
+    description: "details...",
     tags: "tag",
-    ingredients: ["pasta", "beef"],
+    ingradients: ["pasta", "beef"],
     instructions: ["cut", "cook", "eat"],
   },
   setCurrentRecipe: (recipe) => {

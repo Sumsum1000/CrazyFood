@@ -8,20 +8,20 @@ import { RecipeCard } from "../../Components/Recipe/RecipeCard";
 export const Tags = () => {
   const { recipes, setRecipes } = recipesStore();
   const { selectedTag, setSelectedTag } = selectedTagStore();
-  const [temp, setTemp] = useState([]);
+  const [tagRecipeArr, setTagRecipeArr] = useState([]);
 
   useEffect(() => {
     axios({
       method: "get",
       url: `http://localhost:8080/api/v1/recipes/tag/${selectedTag}`,
-    }).then((data) => setTemp(data.data));
+    }).then((data) => setTagRecipeArr(data.data));
   }, []);
 
   return (
     <div className={style["container"]}>
       <h2>{selectedTag}</h2>
       <div className={style["tags-container"]}>
-        {temp.map((recipe) => {
+        {tagRecipeArr.map((recipe) => {
           const url = `http://localhost:3000/all/${recipe._id}`;
           return (
             <Link to={url}>

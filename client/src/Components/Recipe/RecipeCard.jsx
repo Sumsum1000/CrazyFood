@@ -12,32 +12,9 @@ import { Link } from "react-router-dom";
 //   recipeClickHandler?: () => void;
 // }
 
-export const RecipeCard = ({
-  title,
-  id,
-  prepTime,
-  cookTime,
-  url,
-  recipeHandler,
-}) => {
-  // const recipeHandler = (id) => {
-  //   console.log("Handler: ", id);
-  // };
-
-  // const onClick = (e) => {
-  //   recipeHandler(e.id);
-  // };
-
-  const onClickk = (id) => {
-    recipeHandler(id);
-  };
-
+export const RecipeCard = ({ title, id, prepTime, cookTime, onClick }) => {
   return (
-    <div
-      id={id}
-      onClick={() => onClickk(id)}
-      className={style["recipe-container"]}
-    >
+    <div onClick={onClick} id={id} className={style["recipe-container"]}>
       <div className={style["recipe-img-container"]}>
         <img src={recipesArr[0].img} />
       </div>
