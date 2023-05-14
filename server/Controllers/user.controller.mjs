@@ -1,14 +1,14 @@
 import { User } from "../Models/User.model.mjs";
 
-export const createUser = async (req, res) => {
-  try {
-    //res.send("createUser");
-    const user = await User.create(req.body);
-    res.status(201).json({ tasks });
-  } catch (error) {
-    res.status(500).json({ msg: error });
-  }
-};
+// export const createUser = async (req, res) => {
+//   try {
+//     //res.send("createUser");
+//     const user = await User.create(req.body);
+//     res.status(201).json({ tasks });
+//   } catch (error) {
+//     res.status(500).json({ msg: error });
+//   }
+// };
 
 export const getAllUsers = async (req, res) => {
   try {
@@ -21,12 +21,16 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getUser = async (req, res) => {
-  //   try {
-  //     res.status(200).json({ user: "ok" });
-  //   } catch (error) {
-  //     res.status(500).json({ msg: error });
-  //   }
-  res.send("User");
+  const { email, password, id } = req.params;
+  if (!email || !password) {
+    res.status(401).json({ msg: "no password or email" });
+  }
+  try {
+    const user = User.findOne({ _id: id });
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
 };
 
 export const updateUser = async (req, res) => {

@@ -1,6 +1,6 @@
 import express from "express";
 
-export const RecipeRouter = express.Router();
+export const recipeRouter = express.Router();
 
 import {
   createRecipe,
@@ -9,34 +9,34 @@ import {
   deleteRecipe,
   updateRecipe,
   getRecipesByTag,
-} from "../Controllers/recipeController.mjs";
-import { get } from "mongoose";
+} from "../Controllers/recipe.controller.mjs";
+//import { get } from "mongoose";
 
-RecipeRouter.post("/", (req, res) => {
+recipeRouter.post("/", (req, res) => {
   createRecipe(req, res);
 });
 
 // get all recipes
-RecipeRouter.get("/", (req, res) => {
+recipeRouter.get("/", (req, res) => {
   getAllRecipes(req, res);
 });
 
 // get single recipe
-RecipeRouter.get("/:id", (req, res) => {
+recipeRouter.get("/:id", (req, res) => {
   getRecipe(req, res);
 });
 
 // edit recipe
-RecipeRouter.patch("/:id", (req, res) => {
+recipeRouter.patch("/:id", (req, res) => {
   updateRecipe(req, res);
 });
 
 // delete recipe
-RecipeRouter.delete("/:id", (req, res) => {
+recipeRouter.delete("/:id", (req, res) => {
   deleteRecipe(req, res);
 });
 
 // get recipes by tag
-RecipeRouter.get("/tag/:tag", (req, res) => {
+recipeRouter.get("/tag/:tag", (req, res) => {
   getRecipesByTag(req, res);
 });

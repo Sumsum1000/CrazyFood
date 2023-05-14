@@ -1,0 +1,69 @@
+@import "../../root.scss";
+
+.add-container {
+  background-color: tomato;
+  height: 100vh;
+  margin-top: 80px;
+  padding: 5%;
+
+  #add-item-container {
+    //background-color: yellowgreen;
+    display: flex;
+
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-self: center;
+  }
+  button {
+    width: 20px;
+    height: 20px;
+    background-color: transparent;
+    border: 1px solid $dark;
+  }
+
+  form {
+    display: flex;
+    flex-direction: column;
+    gap: $basic-gap;
+
+    div {
+      display: flex;
+      flex-direction: column;
+
+      textarea {
+        resize: none;
+        width: 100%;
+        height: 150px;
+
+        background-color: rgb(238, 183, 170);
+        outline: none;
+        border: none;
+        color: $light;
+        border-bottom: 1px solid rgb(114, 114, 114);
+      }
+
+      input {
+        background-color: transparent;
+        outline: none;
+        border: none;
+        color: $light;
+        border-bottom: 1px solid rgb(114, 114, 114);
+
+        &::placeholder {
+          color: rgb(216, 216, 216);
+        }
+      }
+
+      label {
+        //display: inline-block;
+        //background: red;
+        //color: $light;
+        width: 300px;
+        margin-top: 20px;
+        margin: 0;
+        margin-left: $basic-margin;
+      }
+    }
+  }
+}

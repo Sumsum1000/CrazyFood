@@ -1,8 +1,16 @@
+import { useEffect } from "react";
+import { authStore } from "../../Store/_authStore";
 import style from "./Navbar.module.scss";
 import { NavLink } from "react-router-dom";
 
 export const NavBar = () => {
-  const links = ["all", "about"]; //"tags"
+  const links = ["+", "all", "about", "auth", "logout"]; //"tags"
+
+  const { isLogedIn, setLogin, userName, setUserName } = authStore();
+
+  // useEffect(() => {
+
+  // }, [userName])
 
   return (
     <nav className={style["navbar"]}>
@@ -10,6 +18,7 @@ export const NavBar = () => {
         {" "}
         CrazyFood
       </NavLink>
+      <p>Hello {userName}</p>
       <NavLink
         to="/"
         className={({ isActive }) =>

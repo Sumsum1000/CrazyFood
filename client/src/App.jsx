@@ -9,6 +9,8 @@ import { About } from "./Pages/About/About";
 import { Tags } from "./Pages/Tags/Tags";
 import { All } from "./Pages/All/All";
 import { RecipeDetails } from "./Components/RecipeDetails/RecipeDetails";
+import { Auth } from "./Pages/Auth/Auth";
+import AddRecipe from "./Pages/AddRecipe/AddRecipe";
 
 function App() {
   const [count, setCount] = useState(0);
@@ -21,12 +23,15 @@ function App() {
           <Routes>
             <Route path="/" element={<SharedComponent />}>
               <Route index element={<Home />} />
+              <Route path="/auth" element={<Auth />} />
               <Route path="/about" element={<About />} />
+              <Route path="/+" element={<AddRecipe />} />
               <Route path="/tags/:tag" element={<Tags />} />
               <Route path="/all" element={<All />} />
               <Route path="/all/:id" element={<RecipeDetails />} />
             </Route>
           </Routes>
+          ``
         </Router>
       </div>
       <div className={style["side-r"]} />

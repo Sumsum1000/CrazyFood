@@ -7,6 +7,10 @@ const RecipeSchema = new mongoose.Schema({
     trim: true,
     maxlength: [20, "name cant be more than 20 characters"],
   },
+  image: {
+    type: String,
+    trim: true,
+  },
   description: {
     type: String,
     required: [true, "Must provide a recipe details"],

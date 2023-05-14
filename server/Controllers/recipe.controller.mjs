@@ -2,20 +2,12 @@ import { Recipe } from "../Models/Recipe.model.mjs";
 
 export const createRecipe = async (req, res) => {
   try {
-    const recipe = await Recipe.create(req.body);
+    const recipe = await Recipe.create({ ...req.body });
     res.status(201).json({ recipe });
   } catch (error) {
     res.status(500).json({ msg: error });
   }
 };
-
-//-------------------
-const items = [
-  { taskName: "num 1", taskDetails: "Walk the dog" },
-  { taskName: "num 2", taskDetails: "Walk the cat" },
-  { taskName: "num 3", taskDetails: "Read" },
-  { taskName: "num 4", taskDetails: "Jump" },
-];
 
 // get all recipes
 export const getAllRecipes = async (req, res) => {
