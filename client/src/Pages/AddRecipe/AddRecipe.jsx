@@ -13,19 +13,29 @@ const AddRecipe = () => {
     addIngredientsStore();
   const [tempIngredient, setTempIngredient] = useState("");
 
-  const handler = (e) => {
+  const addHandler = (e) => {
     e.preventDefault();
 
     if (ingredientsRef.current.value !== "") {
-      addIngredient(ingredientsRef.current.value);
+      addIngredient({ id: Math.random(), name: ingredientsRef.current.value });
       ingredientsRef.current.value = "";
+      console.log("Gredient added");
+    } else {
+      console.log("No grediant to add");
     }
-    console.log("No grediant to add");
   };
 
   const removeHandler = (id) => {
-    const temp = ingredients.filter((element) => element.id !== id);
-    console.log("temp ", temp);
+    let temp;
+    for (let element of ingredients) {
+      if (element.id === id) {
+        temp = element;
+      }
+    }
+    const updatedList = ingredients.filter(
+      (element) => element.name != temp.name
+    );
+    removeIngredient(updatedList);
   };
 
   useEffect(() => {
@@ -60,8 +70,7 @@ const AddRecipe = () => {
 
         <div>
           <div id={style["add-item-container"]}>
-            <button onClick={handler}>+</button>
-            {/* <button onClick={removeHandler}>-</button> */}
+            <button onClick={addHandler}>+</button>
             <label htmlFor="ingredients">ingre</label>
           </div>
 
@@ -75,15 +84,18 @@ const AddRecipe = () => {
           />
 
           {/* <AddItem /> */}
-          <ul>
+          <ol>
             {ingredients.map((ingrediant) => (
-              <AddItem
-                printId={(id) => removeHandler(id)}
-                id={Math.random()}
-                element={ingrediant}
-              />
+              <li>
+                <AddItem
+                  id={ingrediant.id}
+                  //printId={(id) => console.log("id ", id)}
+                  passId={(id) => removeHandler(ingrediant.id)}
+                  element={ingrediant.name}
+                />
+              </li>
             ))}
-          </ul>
+          </ol>
         </div>
 
         <div>

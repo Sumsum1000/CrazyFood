@@ -1,12 +1,18 @@
 @import "../../root.scss";
 
 .add-item-container {
+  //background-color: yellowgreen;
   display: flex;
   flex-direction: row;
+  position: relative;
 
-  li {
-    margin: 0;
-    padding: 0;
-    display: inline-block;
+  p {
+    width: 200px;
+    //background-color: aqua;
+  }
+
+  button {
+    position: absolute;
+    right: 0;
   }
 }

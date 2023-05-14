@@ -1,16 +1,16 @@
 import style from "./AddItem.module.scss";
 
-export const AddItem = ({ element, id, printId }) => {
-  const clickHandler = (id) => {
-    //removeHandler(id);
-    //removeIngredient(id);
-    printId(id);
+export const AddItem = ({ element, id, passId }) => {
+  const onClick = (id) => {
+    passId(id);
   };
 
   return (
     <li id={id} className={style["add-item-container"]}>
       <p>{element}</p>
-      <button onClick={() => printId(id)}>-</button>
+      <button onClick={() => onClick(id)} type="button">
+        -
+      </button>
     </li>
   );
 };

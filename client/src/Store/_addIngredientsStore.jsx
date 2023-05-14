@@ -5,9 +5,9 @@ export const addIngredientsStore = create((set) => ({
   addIngredient: (ingredient) => {
     set((state) => ({ ingredients: [...state.ingredients, ingredient] }));
   },
-  removeIngredient: (element) => {
+  removeIngredient: (updatedIngredients) => {
     set((state) => ({
-      ingredients: state.ingredients.filter((e, i) => indexOf(e) !== i),
+      ingredients: updatedIngredients,
     }));
   },
 }));
