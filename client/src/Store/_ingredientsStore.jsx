@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-export const addIngredientsStore = create((set) => ({
+export const ingredientsStore = create((set) => ({
   ingredients: [],
   addIngredient: (ingredient) => {
     set((state) => ({ ingredients: [...state.ingredients, ingredient] }));
@@ -8,6 +8,11 @@ export const addIngredientsStore = create((set) => ({
   removeIngredient: (updatedIngredients) => {
     set((state) => ({
       ingredients: updatedIngredients,
+    }));
+  },
+  resetIngredients: () => {
+    set((state) => ({
+      ingredients: [],
     }));
   },
 }));

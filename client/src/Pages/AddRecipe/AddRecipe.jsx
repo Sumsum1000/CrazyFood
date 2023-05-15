@@ -1,7 +1,9 @@
 import { useEffect, useRef, useState } from "react";
 import style from "./AddRecipe.module.scss";
 import { AddItem } from "../../Components/AddItem/AddItem";
-import { addIngredientsStore } from "../../Store/_addIngredientsStore";
+import { ingredientsStore } from "../../Store/_ingredientsStore";
+import { instructionsStore } from "../../Store/_instructionsStore";
+import { AddInput } from "../../Components/AddInput/AddInput";
 
 const AddRecipe = () => {
   const nameRef = useRef();
@@ -9,16 +11,38 @@ const AddRecipe = () => {
   const ingredientsRef = useRef();
   const instructionsRef = useRef();
 
-  const { ingredients, addIngredient, removeIngredient } =
-    addIngredientsStore();
-  const [tempIngredient, setTempIngredient] = useState("");
+  const { ingredients, addIngredient, removeIngredient, resetIngredients } =
+    ingredientsStore();
+  const {
+    instructions,
+    addInstruction,
+    removeInstructions,
+    resetInstructions,
+  } = instructionsStore();
+  //const [tempIngredient, setTempIngredient] = useState("");
+  const [r1, setR1] = useState("");
+  const [r2, setR2] = useState("");
 
-  const addHandler = (e) => {
-    e.preventDefault();
+  const addHandler1 = (r, ref) => {
+    if (ref.current.value !== "") {
+      addIngredient({
+        id: Math.random(),
+        name: ref.current.value,
+      });
+      ref.current.value = "";
+      console.log("Gredient added");
+    } else {
+      console.log("No grediant to add");
+    }
+  };
 
-    if (ingredientsRef.current.value !== "") {
-      addIngredient({ id: Math.random(), name: ingredientsRef.current.value });
-      ingredientsRef.current.value = "";
+  const addHandler2 = (r, ref) => {
+    if (ref.current.value !== "") {
+      addInstruction({
+        id: Math.random(),
+        name: ref.current.value,
+      });
+      ref.current.value = "";
       console.log("Gredient added");
     } else {
       console.log("No grediant to add");
@@ -38,14 +62,43 @@ const AddRecipe = () => {
     removeIngredient(updatedList);
   };
 
-  useEffect(() => {
-    console.log("ingredients ", ingredients);
-  }, [ingredients]);
+  const removeInstrucionsHandler = (id) => {
+    let temp;
+    for (let element of instructions) {
+      if (element.id === id) {
+        temp = element;
+      }
+    }
+    const updatedList = instructions.filter(
+      (element) => element.name != temp.name
+    );
+    removeInstructions(updatedList);
+  };
+
+  const resetRecipe = () => {
+    nameRef.current.value = "";
+    descriptioneRef.current.value = "";
+    resetIngredients();
+    resetInstructions();
+  };
+
+  const submitHandler = (e) => {
+    e.preventDefault();
+    const newRecipe = {
+      name: nameRef.current.value,
+      description: descriptioneRef.current.value,
+      ingredients: ingredients,
+      instructions: instructions,
+    };
+
+    console.log("newRecipe ", newRecipe);
+    resetRecipe();
+  };
 
   return (
     <div className={style["add-container"]}>
       <h3>Add recipe</h3>
-      <form>
+      <form onSubmit={submitHandler}>
         <div>
           <label htmlFor="name">Recipe</label>
           <input
@@ -69,27 +122,20 @@ const AddRecipe = () => {
         </div>
 
         <div>
-          <div id={style["add-item-container"]}>
-            <button onClick={addHandler}>+</button>
-            <label htmlFor="ingredients">ingre</label>
-          </div>
-
-          <input
-            id="ingredients"
-            type="text"
-            name="ingredients"
-            placeholder="Recipe ingredients"
+          {/* Ingredients */}
+          <AddInput
             ref={ingredientsRef}
-            onChange={() => setTempIngredient(ingredientsRef.current.value)}
+            onChange={() => setR1(ingredientsRef.current.value)}
+            onClick={() => addHandler1(r1, ingredientsRef)}
+            label={"ingredients"}
+            placeholder={"new ingredient"}
           />
 
-          {/* <AddItem /> */}
           <ol>
             {ingredients.map((ingrediant) => (
               <li>
                 <AddItem
                   id={ingrediant.id}
-                  //printId={(id) => console.log("id ", id)}
                   passId={(id) => removeHandler(ingrediant.id)}
                   element={ingrediant.name}
                 />
@@ -99,15 +145,27 @@ const AddRecipe = () => {
         </div>
 
         <div>
-          <label htmlFor="instructions">instructions</label>
-          <input
-            id="instructions"
-            type="text"
-            name="instructions"
-            placeholder="Recipe instructions"
+          {/* Instructions */}
+          <AddInput
             ref={instructionsRef}
+            onChange={() => setR2(instructionsRef.current.value)}
+            onClick={() => addHandler2(r2, instructionsRef)}
+            label={"instructions"}
+            placeholder={"new instrcution"}
           />
+          <ol>
+            {instructions.map((instruction) => (
+              <li>
+                <AddItem
+                  id={instruction.id}
+                  passId={(id) => removeInstrucionsHandler(instruction.id)}
+                  element={instruction.name}
+                />
+              </li>
+            ))}
+          </ol>
         </div>
+        <input type="submit" />
       </form>
     </div>
   );

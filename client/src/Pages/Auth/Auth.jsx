@@ -12,7 +12,8 @@ export const Auth = () => {
   const loginEmaildRef = useRef();
   const loginPasswordRef = useRef();
 
-  const { isLogedIn, setLogin, userName, setUserName } = authStore();
+  const { isLogedIn, setLogin, userName, setUserName, token, setToken } =
+    authStore();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -60,13 +61,9 @@ export const Auth = () => {
       password,
     });
     const { token } = response.data;
-    const userName = response.data.user.name;
-    const userEmail = response.data.user.email;
-    const userPassword = response.data.user.password;
-
-    console.log("name ", userName);
-    console.log("email ", userEmail);
-
+    const userName = response.data.user.name; //const userPassword = response.data.user.password;
+    //const userEmail = response.data.user.email;
+    setToken(token);
     setLogin(true);
 
     localStorage.setItem("token", token);
@@ -79,9 +76,11 @@ export const Auth = () => {
 
   const logout = () => {
     setLogin(false);
-    localStorage.setItem("token", "");
+    localStorage.removeItem("token");
     setUserName("guest");
   };
+
+  useEffect(() => {}, []);
 
   return (
     <div className={style["form-container"]}>
