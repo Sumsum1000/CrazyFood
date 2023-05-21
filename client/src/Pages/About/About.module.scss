@@ -1,0 +1,10 @@
+@import "../../root.scss";
+
+.about-container {
+  color: $light;
+  margin-top: 80px;
+
+  display: flex;
+  flex-direction: column;
+  gap: $basic-gap;
+}

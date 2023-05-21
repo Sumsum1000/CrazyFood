@@ -19,14 +19,6 @@ export const Home = () => {
   const [tagsArr, setTagsArr] = useState([]);
   const [recipeStart, setRecipeStart] = useState([]);
 
-  const fetchRecipeByID = (id) => {
-    // axios({
-    //   method: "get",
-    //   url: `http://localhost:8080/api/v1/recipes/${id}`,
-    // }).then((data) => setRecipes(data.data.recipes));
-    console.log("id ", id);
-  };
-
   const fetchRecipe = (id) => {
     axios({
       method: "get",
@@ -40,22 +32,6 @@ export const Home = () => {
       url: "http://localhost:8080/api/v1/recipes",
     }).then((data) => setRecipes(data.data.recipes));
   }, []);
-
-  // useEffect(() => {
-  //   //console.log("recipes ", recipes);
-  //   if (recipes !== null && recipes !== undefined) {
-  //     recipes.forEach(async (element) => {
-  //       for (const tag of element.tags) {
-  //         await Promise.all([
-  //           setCurrenTags((prevTags) => ({
-  //             ...prevTags,
-  //             [tag]: (prevTags[tag] || 0) + 1,
-  //           })),
-  //         ]);
-  //       }
-  //     });
-  //   }
-  // }, [recipes]);
 
   useEffect(() => {
     if (recipes !== null && recipes !== undefined) {
@@ -96,7 +72,7 @@ export const Home = () => {
         <div className={style["left"]}>
           <h1>Recipes</h1>
           <ul>
-            {tagsArr &&
+            {tagsArr.length > 0 &&
               tagsArr.map((tag) => {
                 return (
                   <Link to={`/tags/${tag.tag}`}>
@@ -120,18 +96,14 @@ export const Home = () => {
             const url = `http://localhost:3000/all/${recipe._id}`;
             let temp;
             return (
-              <Link to={url}>
+              <Link to={url} onClick={() => fetchRecipe(recipe._id)}>
                 <RecipeCard
                   title={recipe.name}
                   id={recipe._id}
                   key={recipe._id}
-                  onClick={() =>
-                    setCurrentRecipe(
-                      recipes.filter((item) => item._id === recipe._id)
-                    )
-                  }
-                  prepTime={recipe.prepTime}
-                  cookTime={recipe.cookTime}
+                  src={`http://localhost:8080/${recipe.image}`}
+                  // prepTime={recipe.prepTime}
+                  // cookTime={recipe.cookTime}
                 />
               </Link>
             );
@@ -141,10 +113,3 @@ export const Home = () => {
     </div>
   );
 };
-
-const arr = [
-  { num: 1, tags: ["baking"] },
-  { num: 2, tags: ["asian"] },
-  { num: 3, tags: ["pasta", "chicken"] },
-  { num: 4, tags: ["soups"] },
-];

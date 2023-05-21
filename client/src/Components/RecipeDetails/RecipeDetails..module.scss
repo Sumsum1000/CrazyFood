@@ -12,6 +12,8 @@
   color: rgb(204, 196, 161);
   height: 100vh;
   margin-top: $basic-margin;
+  margin-bottom: $margin-bottom;
+  padding-bottom: 200px;
   //display: flex;
   display: grid;
   grid-template-rows: 45% auto;
@@ -54,7 +56,9 @@
 
       img {
         width: 100%;
-        object-fit: fill;
+        height: 100%;
+        background-repeat: no-repeat;
+        object-fit: cover;
       }
     }
   }
@@ -64,7 +68,11 @@
     grid-area: ingr;
 
     h3 {
-      margin-top: $basic-margin;
+      margin-top: calc($basic-margin * 3);
     }
+  }
+
+  li {
+    margin-top: $basic-margin;
   }
 }

@@ -1,0 +1,17 @@
+@import "../../root.scss";
+
+.logout-container {
+  margin-top: 160px;
+  display: flex;
+  justify-content: center;
+  gap: $gap-s;
+
+  p {
+    color: white;
+    font-size: 120%;
+  }
+
+  button {
+    width: 30px;
+  }
+}

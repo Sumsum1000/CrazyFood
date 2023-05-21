@@ -10,7 +10,7 @@ import {
   updateRecipe,
   getRecipesByTag,
 } from "../Controllers/recipe.controller.mjs";
-//import { get } from "mongoose";
+import { uploadRecipeImage } from "../Controllers/upload.controller.mjs";
 
 recipeRouter.post("/", (req, res) => {
   createRecipe(req, res);
@@ -39,4 +39,8 @@ recipeRouter.delete("/:id", (req, res) => {
 // get recipes by tag
 recipeRouter.get("/tag/:tag", (req, res) => {
   getRecipesByTag(req, res);
+});
+
+recipeRouter.post("/uploads", (req, res) => {
+  uploadRecipeImage(req, res);
 });

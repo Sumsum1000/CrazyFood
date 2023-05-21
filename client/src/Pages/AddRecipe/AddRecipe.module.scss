@@ -1,13 +1,12 @@
 @import "../../root.scss";
 
 .add-container {
-  background-color: tomato;
-  height: 100vh;
+  background-color: rgb(110, 110, 110);
+  min-height: 100vh;
   margin-top: 80px;
   padding: 5% 15%;
 
   #add-item-container {
-    //background-color: yellowgreen;
     display: flex;
 
     display: flex;
@@ -20,6 +19,7 @@
     height: 20px;
     background-color: transparent;
     border: 1px solid $dark;
+    margin-bottom: 5px;
   }
 
   form {
@@ -30,25 +30,29 @@
     div {
       display: flex;
       flex-direction: column;
+      margin-top: 20px;
 
       textarea {
         resize: none;
         width: 100%;
         height: 150px;
 
-        background-color: rgb(238, 183, 170);
+        background-color: rgb(182, 182, 182);
         outline: none;
         border: none;
         color: $light;
-        border-bottom: 1px solid rgb(114, 114, 114);
+        border-bottom: 1px solid rgb(75, 75, 75);
       }
 
       input {
         background-color: transparent;
+        //height: 40px;
+        padding-top: 10px;
+
         outline: none;
         border: none;
         color: $light;
-        border-bottom: 1px solid rgb(114, 114, 114);
+        border-bottom: 1px solid rgb(75, 75, 75);
 
         &::placeholder {
           color: rgb(216, 216, 216);
@@ -56,14 +60,15 @@
       }
 
       label {
-        //display: inline-block;
-        //background: red;
-        //color: $light;
         width: 300px;
-        margin-top: 20px;
         margin: 0;
-        margin-left: $basic-margin;
+        margin-bottom: $margin-s;
+        margin-left: $margin-s;
       }
     }
   }
+}
+
+fieldset {
+  border: 0;
 }

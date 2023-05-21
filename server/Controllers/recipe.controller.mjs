@@ -71,3 +71,7 @@ export const getRecipesByTag = async (req, res) => {
     res.status(500).json({ msg: error });
   }
 };
+
+export const uploadImage = async (req, res) => {
+  await res.status(201).json("Uploaded");
+};

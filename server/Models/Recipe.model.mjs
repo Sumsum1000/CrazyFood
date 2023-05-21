@@ -19,13 +19,13 @@ const RecipeSchema = new mongoose.Schema({
   },
   prepTime: {
     type: Number,
-    required: [true, "Must provide preperation time"],
+    required: false,
     trim: true,
     maxlength: [22, "preperation time cant be more than 5 characters"],
   },
   cookTime: {
     type: Number,
-    required: [true, "Must provide cook time"],
+    required: false,
     trim: true,
     maxlength: [22, "cook time cant be more than 5 characters"],
   },
@@ -34,7 +34,7 @@ const RecipeSchema = new mongoose.Schema({
     required: [true, "Must provide at list one tag"],
     trim: true,
   },
-  ingradients: {
+  ingredients: {
     type: [{ type: String }],
     required: [true, "Must provide at list one ingrediant"],
     trim: true,
@@ -43,6 +43,10 @@ const RecipeSchema = new mongoose.Schema({
     type: [{ type: String }],
     required: [true, "Must provide at list one instruction"],
     trim: true,
+  },
+  image: {
+    type: String,
+    // required: [true, "Must provide an image"],
   },
 });
 

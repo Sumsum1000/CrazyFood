@@ -11,8 +11,13 @@ export const ingredientsStore = create((set) => ({
     }));
   },
   resetIngredients: () => {
-    set((state) => ({
+    set(() => ({
       ingredients: [],
+    }));
+  },
+  setIngredients: (arr) => {
+    set(() => ({
+      ingredients: arr,
     }));
   },
 }));

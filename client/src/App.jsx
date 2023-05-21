@@ -4,16 +4,17 @@ import style from "./app.module.scss";
 
 import { Home } from "./Pages/HomePage/Home";
 import { SharedComponent } from "./Components/SharedComponent/SharedComponent";
-import { RecipeCard } from "./Components/Recipe/RecipeCard";
+//import { RecipeCard } from "./Components/Recipe/RecipeCard";
 import { About } from "./Pages/About/About";
 import { Tags } from "./Pages/Tags/Tags";
 import { All } from "./Pages/All/All";
 import { RecipeDetails } from "./Components/RecipeDetails/RecipeDetails";
 import { Auth } from "./Pages/Auth/Auth";
 import AddRecipe from "./Pages/AddRecipe/AddRecipe";
+import { Logout } from "./Pages/Logout/Logout";
 
 function App() {
-  const [count, setCount] = useState(0);
+  //const [count, setCount] = useState(0);
 
   return (
     <div className={style["container"]}>
@@ -28,6 +29,7 @@ function App() {
               <Route path="/+" element={<AddRecipe />} />
               <Route path="/tags/:tag" element={<Tags />} />
               <Route path="/all" element={<All />} />
+              <Route path="/logout" element={<Logout />} />
               <Route path="/all/:id" element={<RecipeDetails />} />
             </Route>
           </Routes>

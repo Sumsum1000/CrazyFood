@@ -17,8 +17,12 @@ export const Auth = () => {
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [errorMsg, setErrorMsg] = "error";
+  const [isError, setIsError] = useState(false);
 
   const BASE_URL = "http://localhost:8080/api/v1";
+
+  const errors = [{ emptyField: "Fill in email and password" }];
 
   const submitRegisterHandler = (e) => {
     e.preventDefault();
@@ -79,8 +83,6 @@ export const Auth = () => {
     localStorage.removeItem("token");
     setUserName("guest");
   };
-
-  useEffect(() => {}, []);
 
   return (
     <div className={style["form-container"]}>
@@ -152,7 +154,7 @@ export const Auth = () => {
           <input className={style["btn"]} type="submit" value="Login" />
         </form>
       </div>
-      <button onClick={logout}>Logout</button>
+      {isError && <p>{errorMsg}</p>}
     </div>
   );
 };

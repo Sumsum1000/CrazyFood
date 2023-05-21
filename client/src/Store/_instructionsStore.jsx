@@ -11,8 +11,13 @@ export const instructionsStore = create((set) => ({
     }));
   },
   resetInstructions: () => {
-    set((state) => ({
+    set(() => ({
       instructions: [],
+    }));
+  },
+  setInstructions: (arr) => {
+    set(() => ({
+      instructions: arr,
     }));
   },
 }));

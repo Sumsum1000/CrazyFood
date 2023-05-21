@@ -1,15 +1,36 @@
 import { useEffect, useRef, useState } from "react";
+import axios from "axios";
 import style from "./AddRecipe.module.scss";
 import { AddItem } from "../../Components/AddItem/AddItem";
 import { ingredientsStore } from "../../Store/_ingredientsStore";
 import { instructionsStore } from "../../Store/_instructionsStore";
 import { AddInput } from "../../Components/AddInput/AddInput";
+import {
+  removeItem,
+  addItem,
+  resetRecipe,
+  checkboxHandler,
+} from "./RecipeUtils";
 
 const AddRecipe = () => {
+  const BASE_URL = "http://localhost:8080/api/v1";
+  const tagsNames = [
+    "Beef",
+    "Chicken",
+    "Soups",
+    "Asian",
+    "Italian",
+    "Salads",
+    "vegetarian",
+    "Baking",
+    "Other",
+  ];
+
   const nameRef = useRef();
   const descriptioneRef = useRef();
   const ingredientsRef = useRef();
   const instructionsRef = useRef();
+  const prepTimeRef = useRef();
 
   const { ingredients, addIngredient, removeIngredient, resetIngredients } =
     ingredientsStore();
@@ -19,81 +40,79 @@ const AddRecipe = () => {
     removeInstructions,
     resetInstructions,
   } = instructionsStore();
-  //const [tempIngredient, setTempIngredient] = useState("");
-  const [r1, setR1] = useState("");
-  const [r2, setR2] = useState("");
 
-  const addHandler1 = (r, ref) => {
-    if (ref.current.value !== "") {
-      addIngredient({
-        id: Math.random(),
-        name: ref.current.value,
-      });
-      ref.current.value = "";
-      console.log("Gredient added");
-    } else {
-      console.log("No grediant to add");
-    }
-  };
+  const [tags, setTags] = useState([]);
+  const [selectedImage, setSelectedImage] = useState();
+  //const [imageValue, setImageValue] = useState();
 
-  const addHandler2 = (r, ref) => {
-    if (ref.current.value !== "") {
-      addInstruction({
-        id: Math.random(),
-        name: ref.current.value,
-      });
-      ref.current.value = "";
-      console.log("Gredient added");
-    } else {
-      console.log("No grediant to add");
-    }
-  };
-
-  const removeHandler = (id) => {
-    let temp;
-    for (let element of ingredients) {
-      if (element.id === id) {
-        temp = element;
-      }
-    }
-    const updatedList = ingredients.filter(
-      (element) => element.name != temp.name
-    );
-    removeIngredient(updatedList);
-  };
-
-  const removeInstrucionsHandler = (id) => {
-    let temp;
-    for (let element of instructions) {
-      if (element.id === id) {
-        temp = element;
-      }
-    }
-    const updatedList = instructions.filter(
-      (element) => element.name != temp.name
-    );
-    removeInstructions(updatedList);
-  };
-
-  const resetRecipe = () => {
-    nameRef.current.value = "";
-    descriptioneRef.current.value = "";
-    resetIngredients();
-    resetInstructions();
-  };
-
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    const newRecipe = {
-      name: nameRef.current.value,
-      description: descriptioneRef.current.value,
-      ingredients: ingredients,
-      instructions: instructions,
-    };
 
-    console.log("newRecipe ", newRecipe);
-    resetRecipe();
+    try {
+      const formData = new FormData();
+      formData.append("image", selectedImage);
+      const {
+        data: {
+          image: { src },
+        },
+      } = await axios.post(`${BASE_URL}/recipes/uploads`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("src: ", src);
+      //setImageValue(src);
+
+      //setImageValue(null);
+
+      const newRecipe = {
+        name: nameRef.current.value,
+        description: descriptioneRef.current.value,
+        prepTime: 14,
+        cookTime: 15,
+        ingredients: ingredients,
+        instructions: instructions,
+        tags: tags,
+        image: src,
+      };
+
+      postRecipe(newRecipe);
+      resetRecipe(
+        nameRef,
+        descriptioneRef,
+        resetIngredients,
+        resetInstructions
+      );
+    } catch (error) {
+      console.error(error);
+      //return res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+    }
   };
+
+  const postRecipe = async (newRecipe) => {
+    console.log("post newRecipe ", newRecipe);
+    try {
+      axios
+        .post(`${BASE_URL}/recipes`, newRecipe)
+        .then(function (response) {
+          console.log(response);
+        })
+        .catch(function (error) {
+          console.log(error);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  const handleFileChange = async (e) => {
+    const file = e.target.files[0];
+    setSelectedImage(file);
+  };
+
+  useEffect(() => {
+    console.log("selected file ", selectedImage);
+  }, [selectedImage]);
 
   return (
     <div className={style["add-container"]}>
@@ -125,8 +144,7 @@ const AddRecipe = () => {
           {/* Ingredients */}
           <AddInput
             ref={ingredientsRef}
-            onChange={() => setR1(ingredientsRef.current.value)}
-            onClick={() => addHandler1(r1, ingredientsRef)}
+            onClick={() => addItem(ingredientsRef, addIngredient)}
             label={"ingredients"}
             placeholder={"new ingredient"}
           />
@@ -136,8 +154,10 @@ const AddRecipe = () => {
               <li>
                 <AddItem
                   id={ingrediant.id}
-                  passId={(id) => removeHandler(ingrediant.id)}
-                  element={ingrediant.name}
+                  passId={() =>
+                    removeItem(ingrediant, ingredients, removeIngredient)
+                  }
+                  element={ingrediant}
                 />
               </li>
             ))}
@@ -148,8 +168,7 @@ const AddRecipe = () => {
           {/* Instructions */}
           <AddInput
             ref={instructionsRef}
-            onChange={() => setR2(instructionsRef.current.value)}
-            onClick={() => addHandler2(r2, instructionsRef)}
+            onClick={() => addItem(instructionsRef, addInstruction)}
             label={"instructions"}
             placeholder={"new instrcution"}
           />
@@ -158,13 +177,38 @@ const AddRecipe = () => {
               <li>
                 <AddItem
                   id={instruction.id}
-                  passId={(id) => removeInstrucionsHandler(instruction.id)}
-                  element={instruction.name}
+                  passId={() =>
+                    removeItem(instruction, instructions, removeInstructions)
+                  }
+                  element={instruction}
                 />
               </li>
             ))}
           </ol>
         </div>
+        <fieldset>
+          <legend>Please add a relevat tag</legend>
+          {tagsNames.map((tagName) => (
+            <>
+              <input
+                onChange={(e) => checkboxHandler(e, tags, setTags)}
+                type="checkbox"
+                id={tagName}
+                value={tagName}
+              />
+              <label for={tagName}>{tagName}</label>
+              <br />
+            </>
+          ))}
+        </fieldset>
+        <label for="image">Image</label>
+        <input
+          type="file"
+          id="image"
+          accept="image/*"
+          onChange={handleFileChange}
+        />
+
         <input type="submit" />
       </form>
     </div>

@@ -16,26 +16,26 @@ export const RecipeDetails = () => {
 
   return (
     <>
-      <h2 className={style["details-title"]}>{currentRecipe[0].name}</h2>
+      <h2 className={style["details-title"]}>{currentRecipe.name}</h2>
       <div className={style["details-container"]}>
         {/* <h1>ID: {coctailId}</h1> */}
         <div className={style["left-container"]}>
           <div className={style["img-container"]}>
-            <img src={recipesArr[0].img} />
+            <img src={`http://localhost:8080/${currentRecipe.image}`} />
           </div>
         </div>
         <div className={style["right-container"]}>
           <section>
-            <p>{currentRecipe[0].description}</p>
+            <p>{currentRecipe.description}</p>
           </section>
         </div>
 
         {/* Ingrediants section */}
         <section className={style["ingrediants-container"]}>
-          <h3>Ingradients</h3>
+          <h3>Ingredients</h3>
           <ul>
             {currentRecipe ? (
-              currentRecipe[0].ingradients.map((ingredient) => {
+              currentRecipe.ingredients.map((ingredient) => {
                 return <li>{ingredient}</li>;
               })
             ) : (
@@ -47,7 +47,7 @@ export const RecipeDetails = () => {
           <h3>Instructions</h3>
           <ul>
             {currentRecipe ? (
-              currentRecipe[0].instructions.map((step) => {
+              currentRecipe.instructions.map((step) => {
                 return <li>{step}</li>;
               })
             ) : (

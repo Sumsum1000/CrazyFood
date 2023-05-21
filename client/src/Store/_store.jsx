@@ -18,11 +18,11 @@ export const recipesStore = create((set) => ({
 export const currentRecipeStore = create((set) => ({
   currentRecipe: {
     name: "start",
-    prepTime: 1.5,
-    cookTime: 12,
+    // prepTime: 1.5,
+    // cookTime: 12,
     description: "details...",
     tags: "tag",
-    ingradients: ["pasta", "beef"],
+    ingredients: ["pasta", "beef"],
     instructions: ["cut", "cook", "eat"],
   },
   setCurrentRecipe: (recipe) => {

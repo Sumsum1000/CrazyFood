@@ -4,7 +4,7 @@
   display: flex;
   width: 83.3%;
   height: 60px;
-  border-bottom: 1px solid $light;
+  border-bottom: 1px solid $secondery_3;
   align-items: center;
   gap: $basic-gap;
   position: fixed;
@@ -12,6 +12,7 @@
   box-sizing: border-box;
   //padding: 0 $basic-padding;
   z-index: 3;
+  background-color: $primery_1;
 
   background-color: none;
 
@@ -21,7 +22,7 @@
   }
 
   .active {
-    color: $secondery_2;
+    color: $secondery_3;
   }
 
   .no-active {

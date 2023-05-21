@@ -1,18 +1,18 @@
 @import "../../root.scss";
 
 .add-item-container {
-  //background-color: yellowgreen;
   display: flex;
   flex-direction: row;
   position: relative;
 
   p {
-    width: 200px;
-    //background-color: aqua;
+    width: 97%;
+    margin-top: $basic-margin;
   }
 
   button {
     position: absolute;
     right: 0;
+    margin-top: $margin-s;
   }
 }

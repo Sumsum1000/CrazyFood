@@ -1,3 +1,5 @@
+@import "../../root.scss";
+
 .form-container {
   margin-top: 80px;
   box-sizing: border-box;
@@ -6,13 +8,9 @@
   padding: 40px;
   margin-left: auto;
   margin-right: auto;
-  //background-color: salmon;
   border: 1px solid white;
 
-  //   display: flex;
-  //   flex-direction: column;
   input {
-    //display: inline-block;
     color: white;
     width: 100%;
     background-color: transparent;
@@ -23,31 +21,30 @@
 
   label {
     display: inline-block;
-    //background: red;
-    color: white;
+    color: $light;
     width: 300px;
     margin-top: 20px;
   }
 
   .register-container {
-    //border: 1px solid black;
     height: 50%;
     padding: 20px;
-    // display: flex;
-    // flex-direction: column;
   }
 
   .login-container {
-    //border: 1px solid black;
     height: 50%;
     padding: 20px;
-    // display: flex;
-    // flex-direction: column;
   }
 
   .btn {
-    background-color: yellowgreen;
+    background-color: $primery_2;
+    color: $primery_1;
     margin-top: 30px;
     height: 30px;
+  }
+
+  p {
+    color: $secondery_3;
+    text-align: center;
   }
 }
