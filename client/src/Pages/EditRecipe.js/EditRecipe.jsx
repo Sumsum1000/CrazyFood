@@ -12,6 +12,7 @@ import {
   checkboxHandler,
 } from "../AddRecipe/RecipeUtils";
 import { recipeToEditStore } from "../../Store/_store";
+//import { AddItem } from "../../Pages/AddRecipe/RecipeUtils";
 
 const EditRecipe = () => {
   const BASE_URL = "http://localhost:8080/api/v1";
@@ -51,7 +52,7 @@ const EditRecipe = () => {
   const [editDescription, setEditDescription] = useState("");
   const [editIngrediants, setEditIngrediants] = useState([]);
   const [tagToEdit, setTagToEdit] = useState("");
-  const [tagsList, setTagsList] = useState([]);
+  const [ingredientsToEdit, setIngredientsToEdit] = useState([]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
@@ -124,6 +125,7 @@ const EditRecipe = () => {
     setEditName(recipeToEdit.name);
     setEditDescription(recipeToEdit.description);
     setTagToEdit(recipeToEdit.tags[0]);
+    setIngredientsToEdit(recipeToEdit.ingredients);
   }, [recipeToEdit]);
 
   return (
@@ -158,13 +160,18 @@ const EditRecipe = () => {
           {/* Ingredients */}
           <AddInput
             ref={ingredientsRef}
-            onClick={() => addItem(ingredientsRef, addIngredient)}
+            onClick={() =>
+              setIngredientsToEdit([
+                ...ingredientsToEdit,
+                ingredientsRef.current.value,
+              ])
+            }
             label={"ingredients"}
             placeholder={"new ingredient"}
           />
 
           <ol>
-            {ingredients.map((ingrediant) => (
+            {ingredientsToEdit.map((ingrediant) => (
               <li>
                 <AddItem
                   id={ingrediant.id}
@@ -187,7 +194,7 @@ const EditRecipe = () => {
             placeholder={"new instrcution"}
           />
           <ol>
-            {instructions.map((instruction) => (
+            {recipeToEdit.instructions.map((instruction) => (
               <li>
                 <AddItem
                   id={instruction.id}
