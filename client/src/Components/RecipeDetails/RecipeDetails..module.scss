@@ -16,8 +16,8 @@
   padding-bottom: 200px;
   //display: flex;
   display: grid;
-  grid-template-rows: 45% auto;
   grid-template-columns: 50% 50%;
+  grid-template-rows: 45% auto;
   grid-template-areas:
     "hero section"
     "ingr ingr";
@@ -74,5 +74,27 @@
 
   li {
     margin-top: $basic-margin;
+  }
+}
+
+@media only screen and (max-width: 600px) {
+  .details-title {
+    font-size: $m;
+  }
+
+  .details-container {
+    color: rgb(204, 196, 161);
+    height: 100vh;
+    margin-top: $basic-margin;
+    margin-bottom: $margin-bottom;
+    padding-bottom: 200px;
+    //display: flex;
+    display: grid;
+    grid-template-columns: 100%;
+    grid-template-rows: 45% auto auto;
+    grid-template-areas:
+      "hero"
+      "section"
+      "ingr";
   }
 }

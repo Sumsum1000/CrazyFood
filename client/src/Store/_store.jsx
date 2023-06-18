@@ -38,3 +38,17 @@ export const selectedTagStore = create((set) => ({
     set((state) => ({ selectedTag: tag }));
   },
 }));
+
+export const myRecipesStore = create((set) => ({
+  myRecipes: [{ name: "my name" }],
+  setMyRecipes: (recipes) => {
+    set(() => ({ ingredients: recipes }));
+  },
+}));
+
+export const recipeToEditStore = create((set) => ({
+  recipeToEdit: {},
+  setRecipeToEdit: (recipe) => {
+    set((state) => ({ recipeToEdit: recipe }));
+  },
+}));

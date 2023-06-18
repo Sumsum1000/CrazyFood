@@ -1,18 +1,16 @@
 import style from "./RecipeCard.module.scss";
 import { recipesArr } from "../../TempData";
-import { FC } from "react";
 import { Link } from "react-router-dom";
 
-// interface recipeType {
-//   title: string;
-//   id: string;
-//   prepTime: string;
-//   cookTime: string;
-//   url: string;
-//   recipeClickHandler?: () => void;
-// }
-
-export const RecipeCard = ({ title, id, prepTime, cookTime, onClick, src }) => {
+export const RecipeCard = ({
+  title,
+  id,
+  prepTime,
+  cookTime,
+  onClick,
+  src,
+  children,
+}) => {
   return (
     <div onClick={onClick} id={id} className={style["recipe-container"]}>
       <div className={style["recipe-img-container"]}>
@@ -25,6 +23,7 @@ export const RecipeCard = ({ title, id, prepTime, cookTime, onClick, src }) => {
           prep time: {prepTime} | cook time: {cookTime}
         </p> */}
       </section>
+      {children}
     </div>
   );
 };

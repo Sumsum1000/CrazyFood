@@ -59,3 +59,47 @@
     }
   }
 }
+
+@media only screen and (max-width: 600px) {
+  .home-container {
+    #title {
+      font-size: $xl2;
+    }
+    header {
+      p {
+        font-size: $m;
+      }
+    }
+
+    .bottom-container {
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      .left {
+        height: 20vh;
+
+        h1 {
+          font-size: $xl;
+          padding: 0;
+          //background-color: aqua;
+        }
+        ul {
+          //background-color: aqua;
+          display: flex;
+          flex-direction: row;
+          flex-wrap: wrap;
+          gap: $gap-s;
+        }
+      }
+    }
+
+    .recipes-container {
+      display: grid;
+      height: 50vh;
+      grid-template-columns: 1fr;
+      grid-template-rows: 53% 53%;
+
+      //flex: 4;
+    }
+  }
+}

@@ -1,0 +1,23 @@
+@import "../../root.scss";
+
+.all-container {
+  h2 {
+    color: $light;
+    margin-top: 70px;
+    height: 100%;
+  }
+
+  .recipes-container {
+    //background-color: salmon;
+    margin-top: $basic-margin;
+    display: grid;
+    gap: $gap-xs;
+    grid-template-columns: 1fr 1fr 1fr 1fr;
+    grid-template-rows: 250px 250px 250px;
+
+    button {
+      background-color: $secondery_3;
+      z-index: 20;
+    }
+  }
+}

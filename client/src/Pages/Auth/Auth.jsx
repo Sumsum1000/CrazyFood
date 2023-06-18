@@ -12,17 +12,36 @@ export const Auth = () => {
   const loginEmaildRef = useRef();
   const loginPasswordRef = useRef();
 
-  const { isLogedIn, setLogin, userName, setUserName, token, setToken } =
-    authStore();
+  const {
+    isLogedIn,
+    setLogin,
+    userId,
+    setUserId,
+    userName,
+    setUserName,
+    token,
+    setToken,
+  } = authStore();
+
+  const errors = {
+    emptyField: "Fill in email and password",
+    noToken: "Invalid credentials",
+  };
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [errorMsg, setErrorMsg] = "error";
+  const [errorMsg, setErrorMsg] = useState("Invalid credentials");
   const [isError, setIsError] = useState(false);
 
   const BASE_URL = "http://localhost:8080/api/v1";
 
-  const errors = [{ emptyField: "Fill in email and password" }];
+  const loginEmptyCheck = (loginEmaildRef, loginPasswordRef) => {
+    if (email === "" || password === "") {
+      setIsError(true);
+      setErrorMsg(errors.emptyField);
+      return;
+    }
+  };
 
   const submitRegisterHandler = (e) => {
     e.preventDefault();
@@ -42,7 +61,12 @@ export const Auth = () => {
         navigate("/");
       })
       .catch(function (error) {
-        console.log(error);
+        const errorMessage = error.response.data.message;
+        if (errorMessage.startsWith("E11000 duplicate key error collection")) {
+          setErrorMsg("User already exists");
+        }
+        console.log("error:", error);
+        setIsError(true);
       });
   };
 
@@ -55,40 +79,46 @@ export const Auth = () => {
     try {
       const token = await login(email, password);
     } catch (error) {
+      setIsError(true);
       console.error(error);
     }
   };
 
   const login = async (email, password) => {
+    loginEmptyCheck();
+    //tokenCheck();
+
     const response = await axios.post(`${BASE_URL}/auth/login`, {
       email,
       password,
     });
+    console.log("RESPONSE: ", response);
     const { token } = response.data;
-    const userName = response.data.user.name; //const userPassword = response.data.user.password;
-    //const userEmail = response.data.user.email;
+    const userName = response.data.user.name;
+    const userId = response.data.user.userId;
+
     setToken(token);
     setLogin(true);
 
     localStorage.setItem("token", token);
     localStorage.setItem("userName", userName);
+    //console.log("userId: ", userId);
 
+    setUserId(userId);
     setUserName(localStorage.getItem("userName"));
     navigate("/");
     return token;
   };
 
-  const logout = () => {
-    setLogin(false);
-    localStorage.removeItem("token");
-    setUserName("guest");
-  };
+  useEffect(() => {
+    setIsError(false);
+  }, []);
 
   return (
     <div className={style["form-container"]}>
       <form
         className={style["register-container"]}
-        onClick={submitRegisterHandler}
+        onSubmit={submitRegisterHandler}
       >
         <div>
           <label htmlFor="name">Name</label>
@@ -127,7 +157,7 @@ export const Auth = () => {
 
       {/* Login */}
       <div className={style["login-container"]}>
-        <form onClick={submitLoginHandler}>
+        <form onSubmit={submitLoginHandler}>
           <div>
             <label htmlFor="email">Email</label>
             <input

@@ -65,7 +65,7 @@ export const Home = () => {
     <div className={style["home-container"]}>
       {/* {<img src={mainImg} />} */}
       <header>
-        <h1>CrazyFood</h1>
+        <h1 id={style["title"]}>CrazyFood</h1>
         <p>Only Great food no #@%&%</p>
       </header>
       <section className={style["bottom-container"]}>

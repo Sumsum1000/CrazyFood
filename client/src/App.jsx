@@ -12,6 +12,8 @@ import { RecipeDetails } from "./Components/RecipeDetails/RecipeDetails";
 import { Auth } from "./Pages/Auth/Auth";
 import AddRecipe from "./Pages/AddRecipe/AddRecipe";
 import { Logout } from "./Pages/Logout/Logout";
+import { MyRecipes } from "./Pages/MyRecipes/MyRecipes";
+import EditRecipe from "./Pages/EditRecipe.js/EditRecipe";
 
 function App() {
   //const [count, setCount] = useState(0);
@@ -29,6 +31,8 @@ function App() {
               <Route path="/+" element={<AddRecipe />} />
               <Route path="/tags/:tag" element={<Tags />} />
               <Route path="/all" element={<All />} />
+              <Route path="/my-recipes" element={<MyRecipes />} />
+              <Route path="/my-recipes/edit" element={<EditRecipe />} />
               <Route path="/logout" element={<Logout />} />
               <Route path="/all/:id" element={<RecipeDetails />} />
             </Route>

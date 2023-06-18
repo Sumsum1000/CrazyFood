@@ -7,7 +7,9 @@ export const About = () => {
     <div className={style["about-container"]}>
       <h1 className={style["title"]}>Wecome to crazyFood</h1>
       {aboutContent.map((p) => (
-        <p>{p}</p>
+        <p id={p.id} key={p.id}>
+          {p.text}
+        </p>
       ))}
     </div>
   );
