@@ -203,16 +203,21 @@ const EditRecipe = () => {
         <fieldset>
           <legend>Please add a relevat tag</legend>
           {tagsNames.map((tagName) => {
-            <>
-              <input
-                onChange={(e) => checkboxHandler(e, tags, setTags)}
-                type="checkbox"
-                id={tagName}
-                value={tagName}
-              />
-              <label for={tagName}>{tagName}</label>
-              <br />
-            </>;
+            let tempChecked = false;
+            tagName === recipeToEdit.tags[0] ? (tempChecked = true) : "";
+            return (
+              <>
+                <input
+                  onChange={(e) => checkboxHandler(e, tags, setTags)}
+                  type="checkbox"
+                  id={tagName}
+                  checked={tempChecked}
+                  value={tagName}
+                />
+                <label for={tagName}>{tagName}</label>
+                <br />
+              </>
+            );
           })}
         </fieldset>
         <label for="image">Image</label>
