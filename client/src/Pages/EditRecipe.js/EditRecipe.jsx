@@ -120,7 +120,7 @@ const EditRecipe = () => {
   }, [selectedImage]);
 
   useEffect(() => {
-    console.log("recipeToEdit DFGDRFGR", recipeToEdit);
+    console.log("recipeToEdit DFGDRFGR", recipeToEdit.name);
 
     setEditName(recipeToEdit.name);
     setEditDescription(recipeToEdit.description);

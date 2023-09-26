@@ -7,6 +7,10 @@ const RecipeSchema = new mongoose.Schema({
     trim: true,
     maxlength: [20, "name cant be more than 20 characters"],
   },
+  userId: {
+    required: true,
+    type: mongoose.Schema.Types.ObjectId,
+  },
   image: {
     type: String,
     trim: true,

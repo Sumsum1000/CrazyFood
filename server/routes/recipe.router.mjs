@@ -9,6 +9,7 @@ import {
   deleteRecipe,
   updateRecipe,
   getRecipesByTag,
+  getAllRecipesByUserId,
 } from "../Controllers/recipe.controller.mjs";
 import { uploadRecipeImage } from "../Controllers/upload.controller.mjs";
 
@@ -19,6 +20,11 @@ recipeRouter.post("/", (req, res) => {
 // get all recipes
 recipeRouter.get("/", (req, res) => {
   getAllRecipes(req, res);
+});
+
+// get all recipes by user ID
+recipeRouter.get("/my-recipes/:userId", (req, res) => {
+  getAllRecipesByUserId(req, res);
 });
 
 // get single recipe

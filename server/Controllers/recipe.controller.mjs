@@ -19,10 +19,21 @@ export const getAllRecipes = async (req, res) => {
   }
 };
 
+// get all recipes BY USER id
+export const getAllRecipesByUserId = async (req, res) => {
+  try {
+    const { userId } = req.params;
+    const recipes = await Recipe.find({ userId: userId });
+    res.status(200).json({ recipes });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
 // get single recipe
 export const getRecipe = async (req, res) => {
   try {
-    const id = req.params.id;
+    const { id } = req.params;
     const recipe = await Recipe.findOne({ _id: id });
     res.status(200).json({ recipe });
   } catch (error) {
@@ -62,9 +73,6 @@ export const deleteRecipe = async (req, res) => {
 export const getRecipesByTag = async (req, res) => {
   try {
     const selectedTag = req.params.tag;
-    // const recipes = await Recipe.find({
-    //   tags: { $elemMatch: { $eq: selectedTag } },
-    // });
     const recipes = await Recipe.find({ tags: selectedTag });
     res.status(200).json(recipes);
   } catch (error) {
