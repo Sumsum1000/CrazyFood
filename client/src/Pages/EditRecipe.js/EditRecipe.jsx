@@ -13,11 +13,11 @@ import {
 } from "../AddRecipe/RecipeUtils";
 import { recipeToEditStore } from "../../Store/_store";
 //import { AddItem } from "../../Pages/AddRecipe/RecipeUtils";
+const { recipeToEdit, setRecipeToEdit } = recipeToEditStore();
 
 const EditRecipe = () => {
   const BASE_URL = "http://localhost:8080/api/v1";
   const tagsNames = [
-    "Beef",
     "Chicken",
     "Soups",
     "Asian",
@@ -28,6 +28,8 @@ const EditRecipe = () => {
     "Other",
   ];
 
+  const [isLoading, setIsLoading] = useState(true);
+  const [temp, setTemp] = useState({});
   const nameRef = useRef();
   const descriptioneRef = useRef();
   const ingredientsRef = useRef();
@@ -94,6 +96,21 @@ const EditRecipe = () => {
     }
   };
 
+  useEffect(() => {
+    console.log("recipeToEdit^^ ", recipeToEdit);
+  }, [recipeToEdit]);
+
+  // useEffect(() => {
+  //   axios
+  //     .get(`${BASE_URL}/recipes/${recipeId}`) // replace with your actual API endpoint
+  //     .then((response) => {
+  //       setRecipeToEdit(response.data);
+  //     })
+  //     .catch((error) => {
+  //       console.error(error);
+  //     });
+  // }, []);
+
   const postRecipe = async (newRecipe) => {
     console.log("post newRecipe ", newRecipe);
     try {
@@ -115,128 +132,143 @@ const EditRecipe = () => {
     setSelectedImage(file);
   };
 
-  useEffect(() => {
-    console.log("selected file ", selectedImage);
-  }, [selectedImage]);
+  // useEffect(() => {
+  //   console.log("rteP: ", recipeToEdit);
+  // }, [recipeToEdit]);
 
   useEffect(() => {
-    console.log("recipeToEdit DFGDRFGR", recipeToEdit.name);
+    const { recipeToEdit } = recipeToEditStore.getState();
+    if (recipeToEdit.name !== "" || recipeToEdit.name !== undefined) {
+      console.log("recipeToEdit DFGDRFGR", recipeToEdit.name);
 
-    setEditName(recipeToEdit.name);
-    setEditDescription(recipeToEdit.description);
-    setTagToEdit(recipeToEdit.tags[0]);
-    setIngredientsToEdit(recipeToEdit.ingredients);
-  }, [recipeToEdit]);
+      setEditName(recipeToEdit.name);
+      setEditDescription(recipeToEdit.description);
+      setTagToEdit(recipeToEdit.tags[0]);
+      setIngredientsToEdit(recipeToEdit.ingredients);
+
+      setIsLoading(false);
+    }
+  }, []);
 
   return (
     <div className={style["add-container"]}>
-      <h3>Add recipe</h3>
-      <form onSubmit={submitHandler}>
-        <div>
-          <label htmlFor="name">Recipe</label>
-          <input
-            id="name"
-            type="text"
-            name="name"
-            defaultValue={editName}
-            placeholder="Recipe name"
-            ref={nameRef}
-          />
-        </div>
+      {isLoading ? (
+        <h1>Loading...</h1>
+      ) : (
+        <>
+          <h3>Add recipe</h3>
+          <form onSubmit={submitHandler}>
+            <div>
+              <label htmlFor="name">Recipe</label>
+              <input
+                id="name"
+                type="text"
+                name="name"
+                defaultValue={editName}
+                placeholder="Recipe name"
+                ref={nameRef}
+              />
+            </div>
 
-        <div>
-          <label htmlFor="description">description</label>
-          <textarea
-            id="description"
-            type="text"
-            name="description"
-            defaultValue={editDescription}
-            placeholder="Recipe description"
-            ref={descriptioneRef}
-          />
-        </div>
+            <div>
+              <label htmlFor="description">description</label>
+              <textarea
+                id="description"
+                type="text"
+                name="description"
+                defaultValue={editDescription}
+                placeholder="Recipe description"
+                ref={descriptioneRef}
+              />
+            </div>
 
-        <div>
-          {/* Ingredients */}
-          <AddInput
-            ref={ingredientsRef}
-            onClick={() =>
-              setIngredientsToEdit([
-                ...ingredientsToEdit,
-                ingredientsRef.current.value,
-              ])
-            }
-            label={"ingredients"}
-            placeholder={"new ingredient"}
-          />
+            <div>
+              {/* Ingredients */}
+              <AddInput
+                ref={ingredientsRef}
+                onClick={() =>
+                  setIngredientsToEdit([
+                    ...ingredientsToEdit,
+                    ingredientsRef.current.value,
+                  ])
+                }
+                label={"ingredients"}
+                placeholder={"new ingredient"}
+              />
 
-          <ol>
-            {ingredientsToEdit.map((ingrediant) => (
-              <li>
-                <AddItem
-                  id={ingrediant.id}
-                  passId={() =>
-                    removeItem(ingrediant, ingredients, removeIngredient)
-                  }
-                  element={ingrediant}
-                />
-              </li>
-            ))}
-          </ol>
-        </div>
+              <ol>
+                {ingredientsToEdit.map((ingrediant) => (
+                  <li>
+                    <AddItem
+                      id={ingrediant.id}
+                      passId={() =>
+                        removeItem(ingrediant, ingredients, removeIngredient)
+                      }
+                      element={ingrediant}
+                    />
+                  </li>
+                ))}
+              </ol>
+            </div>
 
-        <div>
-          {/* Instructions */}
-          <AddInput
-            ref={instructionsRef}
-            onClick={() => addItem(instructionsRef, addInstruction)}
-            label={"instructions"}
-            placeholder={"new instrcution"}
-          />
-          <ol>
-            {recipeToEdit.instructions.map((instruction) => (
-              <li>
-                <AddItem
-                  id={instruction.id}
-                  passId={() =>
-                    removeItem(instruction, instructions, removeInstructions)
-                  }
-                  element={instruction}
-                />
-              </li>
-            ))}
-          </ol>
-        </div>
-        <fieldset>
-          <legend>Please add a relevat tag</legend>
-          {tagsNames.map((tagName) => {
-            let tempChecked = false;
-            tagName === recipeToEdit.tags[0] ? (tempChecked = true) : "";
-            return (
-              <>
-                <input
-                  onChange={(e) => checkboxHandler(e, tags, setTags)}
-                  type="checkbox"
-                  id={tagName}
-                  checked={tempChecked}
-                  value={tagName}
-                />
-                <label for={tagName}>{tagName}</label>
-                <br />
-              </>
-            );
-          })}
-        </fieldset>
-        <label for="image">Image</label>
-        <input
-          type="file"
-          id="image"
-          accept="image/*"
-          onChange={handleFileChange}
-        />
+            <div>
+              {/* Instructions */}
+              <AddInput
+                ref={instructionsRef}
+                onClick={() => addItem(instructionsRef, addInstruction)}
+                label={"instructions"}
+                placeholder={"new instrcution"}
+              />
+              <ol>
+                {recipeToEdit.instructions.map((instruction) => (
+                  <li>
+                    <AddItem
+                      id={instruction.id}
+                      passId={() =>
+                        removeItem(
+                          instruction,
+                          instructions,
+                          removeInstructions
+                        )
+                      }
+                      element={instruction}
+                    />
+                  </li>
+                ))}
+              </ol>
+            </div>
+            <fieldset>
+              <legend>Please add a relevat tag</legend>
+              {tagsNames.map((tagName) => {
+                let tempChecked = false;
+                tagName === recipeToEdit.tags[0] ? (tempChecked = true) : "";
+                return (
+                  <>
+                    <input
+                      onChange={(e) => checkboxHandler(e, tags, setTags)}
+                      type="checkbox"
+                      id={tagName}
+                      checked={tempChecked}
+                      value={tagName}
+                    />
+                    <label for={tagName}>{tagName}</label>
+                    <br />
+                  </>
+                );
+              })}
+            </fieldset>
+            <label for="image">Image</label>
+            <input
+              type="file"
+              id="image"
+              accept="image/*"
+              onChange={handleFileChange}
+            />
 
-        <input type="submit" />
-      </form>
+            <input type="submit" />
+          </form>
+        </>
+      )}
     </div>
   );
 };

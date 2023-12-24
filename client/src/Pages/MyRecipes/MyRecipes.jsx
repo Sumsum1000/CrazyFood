@@ -49,6 +49,7 @@ export const MyRecipes = () => {
       url: `http://localhost:8080/api/v1/recipes/${id}`,
     }).then((data) => {
       setRecipeToEdit(data.data.recipe);
+      localStorage.setItem("recipeToedit", JSON.stringify(data.data.recipe));
     });
     navigate("./edit");
   };
@@ -60,10 +61,6 @@ export const MyRecipes = () => {
       console.log(error);
     }
   }, [userId]);
-
-  useEffect(() => {
-    console.log("recipeToEdit ", recipeToEdit);
-  }, [recipeToEdit]);
 
   return (
     <div className={style["all-container"]}>
