@@ -48,10 +48,11 @@ export const myRecipesStore = create((set) => ({
 
 export const recipeToEditStore = create((set) => ({
   recipeToEdit: {
-    name: "",
+    name: "Asaf",
     description: "",
     tags: [],
     ingredients: [],
+    instructions: [],
   },
   setRecipeToEdit: (recipe) => {
     //set((state) => ({ recipeToEdit: recipe }));

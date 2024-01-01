@@ -41,7 +41,7 @@ export const NavBar = () => {
         authLinks.map((link) => {
           return (
             <NavLink
-              key={Math.random()}
+              key={crypto.randomUUID()}
               to={`/${link}`}
               className={({ isActive }) =>
                 isActive ? style["active"] : style["no-active"]
@@ -55,7 +55,7 @@ export const NavBar = () => {
       {links.map((link) => {
         return (
           <NavLink
-            key={Math.random()}
+            key={crypto.randomUUID()}
             to={`/${link}`}
             className={({ isActive }) =>
               isActive ? style["active"] : style["no-active"]
@@ -76,7 +76,7 @@ export const NavBar = () => {
         >
           {links.map((link) => {
             return (
-              <NavLink key={Math.random()} to={`/${link}`}>
+              <NavLink key={crypto.randomUUID()} to={`/${link}`}>
                 {link}
               </NavLink>
             );

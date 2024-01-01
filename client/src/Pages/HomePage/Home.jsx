@@ -75,10 +75,11 @@ export const Home = () => {
             {tagsArr.length > 0 &&
               tagsArr.map((tag) => {
                 return (
-                  <Link to={`/tags/${tag.tag}`}>
+                  <Link key={crypto.randomUUID()} to={`/tags/${tag.tag}`}>
                     <li>
                       <Tag
-                        id={Math.random()}
+                        id={crypto.randomUUID()}
+                        key={crypto.randomUUID()}
                         tagHandler={() => setSelectedTag(tag.tag)}
                         tagName={tag.tag}
                         tagQuantity={tag.quantity}
@@ -96,7 +97,11 @@ export const Home = () => {
             const url = `http://localhost:3000/all/${recipe._id}`;
             let temp;
             return (
-              <Link to={url} onClick={() => fetchRecipe(recipe._id)}>
+              <Link
+                key={crypto.randomUUID()}
+                to={url}
+                onClick={() => fetchRecipe(recipe._id)}
+              >
                 <RecipeCard
                   title={recipe.name}
                   id={recipe._id}

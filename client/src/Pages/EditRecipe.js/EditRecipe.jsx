@@ -4,6 +4,7 @@ import style from "./EditRecipe.module.scss";
 import { AddItem } from "../../Components/AddItem/AddItem";
 import { ingredientsStore } from "../../Store/_ingredientsStore";
 import { instructionsStore } from "../../Store/_instructionsStore";
+import { recipeToEditStore } from "../../Store/_store";
 import { AddInput } from "../../Components/AddInput/AddInput";
 import {
   removeItem,
@@ -11,9 +12,8 @@ import {
   resetRecipe,
   checkboxHandler,
 } from "../AddRecipe/RecipeUtils";
-import { recipeToEditStore } from "../../Store/_store";
 //import { AddItem } from "../../Pages/AddRecipe/RecipeUtils";
-const { recipeToEdit, setRecipeToEdit } = recipeToEditStore();
+//const { recipeToEdit, setRecipeToEdit } = recipeToEditStore();
 
 const EditRecipe = () => {
   const BASE_URL = "http://localhost:8080/api/v1";
@@ -28,6 +28,7 @@ const EditRecipe = () => {
     "Other",
   ];
 
+  const { recipeToEdit, setRecipeToEdit } = recipeToEditStore();
   const [isLoading, setIsLoading] = useState(true);
   const [temp, setTemp] = useState({});
   const nameRef = useRef();
@@ -44,7 +45,6 @@ const EditRecipe = () => {
     removeInstructions,
     resetInstructions,
   } = instructionsStore();
-  const { recipeToEdit, setRecipeToEdit } = recipeToEditStore();
 
   const [tags, setTags] = useState([]);
   const [selectedImage, setSelectedImage] = useState();
@@ -99,17 +99,6 @@ const EditRecipe = () => {
   useEffect(() => {
     console.log("recipeToEdit^^ ", recipeToEdit);
   }, [recipeToEdit]);
-
-  // useEffect(() => {
-  //   axios
-  //     .get(`${BASE_URL}/recipes/${recipeId}`) // replace with your actual API endpoint
-  //     .then((response) => {
-  //       setRecipeToEdit(response.data);
-  //     })
-  //     .catch((error) => {
-  //       console.error(error);
-  //     });
-  // }, []);
 
   const postRecipe = async (newRecipe) => {
     console.log("post newRecipe ", newRecipe);
@@ -221,7 +210,7 @@ const EditRecipe = () => {
               />
               <ol>
                 {recipeToEdit.instructions.map((instruction) => (
-                  <li>
+                  <div>
                     <AddItem
                       id={instruction.id}
                       passId={() =>
@@ -233,7 +222,7 @@ const EditRecipe = () => {
                       }
                       element={instruction}
                     />
-                  </li>
+                  </div>
                 ))}
               </ol>
             </div>
