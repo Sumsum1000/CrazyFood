@@ -60,19 +60,21 @@ const EditRecipe = () => {
     e.preventDefault();
 
     try {
-      const formData = new FormData();
-      formData.append("image", selectedImage);
-      const {
-        data: {
-          image: { src },
-        },
-      } = await axios.post(`${BASE_URL}/recipes/uploads`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      // --- Image update
+      // const formData = new FormData();
+      // formData.append("image", selectedImage);
+      // const {
+      //   data: {
+      //     image: { src },
+      //   },
+      // } = await axios.post(`${BASE_URL}/recipes/uploads`, formData, {
+      //   headers: {
+      //     "Content-Type": "multipart/form-data",
+      //   },
+      // });
 
       const newRecipe = {
+        //id: recipeToEdit.id,
         name: nameRef.current.value,
         description: descriptioneRef.current.value,
         prepTime: 14,
@@ -80,31 +82,23 @@ const EditRecipe = () => {
         ingredients: ingredients,
         instructions: instructions,
         tags: tags,
-        image: src,
+        //image: src,
       };
+      console.log("newRecipe^^^^ ", newRecipe);
 
-      postRecipe(newRecipe);
-      resetRecipe(
-        nameRef,
-        descriptioneRef,
-        resetIngredients,
-        resetInstructions
-      );
+      patchRecipe(newRecipe);
     } catch (error) {
       console.error(error);
       //return res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
     }
   };
 
-  useEffect(() => {
-    console.log("recipeToEdit^^ ", recipeToEdit);
-  }, [recipeToEdit]);
+  const patchRecipe = async (newRecipe) => {
+    //console.log("recipeToEdit:===== ", recipeToEdit);
 
-  const postRecipe = async (newRecipe) => {
-    console.log("post newRecipe ", newRecipe);
     try {
-      axios
-        .post(`${BASE_URL}/recipes`, newRecipe)
+      await axios
+        .patch(`${BASE_URL}/recipes/${recipeToEdit._id}`, newRecipe)
         .then(function (response) {
           console.log(response);
         })
@@ -112,6 +106,7 @@ const EditRecipe = () => {
           console.log(error);
         });
     } catch (error) {
+      console.log("error");
       console.error(error);
     }
   };
@@ -121,15 +116,9 @@ const EditRecipe = () => {
     setSelectedImage(file);
   };
 
-  // useEffect(() => {
-  //   console.log("rteP: ", recipeToEdit);
-  // }, [recipeToEdit]);
-
   useEffect(() => {
     const { recipeToEdit } = recipeToEditStore.getState();
-    if (recipeToEdit.name !== "" || recipeToEdit.name !== undefined) {
-      console.log("recipeToEdit DFGDRFGR", recipeToEdit.name);
-
+    if (recipeToEdit.name !== "" && recipeToEdit.name !== undefined) {
       setEditName(recipeToEdit.name);
       setEditDescription(recipeToEdit.description);
       setTagToEdit(recipeToEdit.tags[0]);
@@ -137,7 +126,8 @@ const EditRecipe = () => {
 
       setIsLoading(false);
     }
-  }, []);
+    console.log("recipeToEdit---", recipeToEdit);
+  }, [recipeToEdit]);
 
   return (
     <div className={style["add-container"]}>
@@ -146,7 +136,9 @@ const EditRecipe = () => {
       ) : (
         <>
           <h3>Add recipe</h3>
-          <form onSubmit={submitHandler}>
+          <button onClick={submitHandler}>handler</button>
+          {/*  <form onSubmit={submitHandler}> */}
+          <form>
             <div>
               <label htmlFor="name">Recipe</label>
               <input
@@ -253,7 +245,6 @@ const EditRecipe = () => {
               accept="image/*"
               onChange={handleFileChange}
             />
-
             <input type="submit" />
           </form>
         </>

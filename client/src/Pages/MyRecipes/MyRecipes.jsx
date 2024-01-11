@@ -40,17 +40,24 @@ export const MyRecipes = () => {
   //   }).then((data) => setCurrentRecipe(data.data.recipe));
   // };
 
-  const editRecipeHandler = (e, id) => {
+  const editRecipeHandler = async (e, id) => {
     e.stopPropagation();
     e.preventDefault();
 
-    axios({
+    await axios({
       method: "get",
       url: `http://localhost:8080/api/v1/recipes/${id}`,
     }).then((data) => {
       setRecipeToEdit(data.data.recipe);
-      localStorage.setItem("recipeToedit", JSON.stringify(data.data.recipe));
+      // setRecipeToEdit((state) => ({
+      //   ...state,
+      //   id: e.id,
+      // }));
+      //setUserId({...state, id: e.id})
+      //localStorage.setItem("recipeToedit", JSON.stringify(data.data.recipe));
+      //console.log("recipeToedit!!: ", data.data.recipe);
     });
+
     navigate("./edit");
   };
 

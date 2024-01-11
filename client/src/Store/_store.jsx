@@ -48,6 +48,7 @@ export const myRecipesStore = create((set) => ({
 
 export const recipeToEditStore = create((set) => ({
   recipeToEdit: {
+    id: "",
     name: "Asaf",
     description: "",
     tags: [],
