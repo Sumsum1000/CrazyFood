@@ -153,9 +153,11 @@ const AddRecipe = () => {
             {ingredients.map((ingrediant) => (
               <li>
                 <AddItem
-                  id={ingrediant.id}
-                  passId={() =>
-                    removeItem(ingrediant, ingredients, removeIngredient)
+                  id={ingrediant}
+                  passId={
+                    (id) =>
+                      removeItem(ingrediant, ingredients, removeIngredient)
+                    //console.log("id ", id)
                   }
                   element={ingrediant}
                 />
@@ -189,19 +191,18 @@ const AddRecipe = () => {
         <fieldset>
           <legend>Please add a relevat tag</legend>
           {tagsNames.map((tagName) => (
-            <>
+            <div id={tagName} key={tagName}>
               <input
                 onChange={(e) => checkboxHandler(e, tags, setTags)}
                 type="checkbox"
-                id={tagName}
                 value={tagName}
               />
-              <label for={tagName}>{tagName}</label>
+              <label htmlFor={tagName}>{tagName}</label>
               <br />
-            </>
+            </div>
           ))}
         </fieldset>
-        <label for="image">Image</label>
+        <label htmlFor="image">Image</label>
         <input
           type="file"
           id="image"

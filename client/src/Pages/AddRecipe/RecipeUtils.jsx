@@ -1,10 +1,8 @@
-export const removeItem = (nameToRemove, arr, remove) => {
-  let temp;
+export const removeItem = (nameToRemove, arr, updateState) => {
   for (let element of arr) {
     if (element === nameToRemove) {
-      temp = element;
       const updatedList = arr.filter((element) => element !== nameToRemove);
-      remove(updatedList);
+      updateState(updatedList);
     }
   }
 };

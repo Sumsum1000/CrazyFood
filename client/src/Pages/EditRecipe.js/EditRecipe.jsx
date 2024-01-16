@@ -6,6 +6,7 @@ import { ingredientsStore } from "../../Store/_ingredientsStore";
 import { instructionsStore } from "../../Store/_instructionsStore";
 import { recipeToEditStore } from "../../Store/_store";
 import { AddInput } from "../../Components/AddInput/AddInput";
+import { useNavigate } from "react-router-dom";
 import {
   removeItem,
   addItem,
@@ -28,7 +29,13 @@ const EditRecipe = () => {
     "Other",
   ];
 
-  const { recipeToEdit, setRecipeToEdit } = recipeToEditStore();
+  const navigate = useNavigate();
+  const {
+    recipeToEdit,
+    setRecipeToEdit,
+    addIngredientEdit,
+    removeIngredientEdit,
+  } = recipeToEditStore();
   const [isLoading, setIsLoading] = useState(true);
   const [temp, setTemp] = useState({});
   const nameRef = useRef();
@@ -74,12 +81,11 @@ const EditRecipe = () => {
       // });
 
       const newRecipe = {
-        //id: recipeToEdit.id,
         name: nameRef.current.value,
         description: descriptioneRef.current.value,
         prepTime: 14,
         cookTime: 15,
-        ingredients: ingredients,
+        ingredients: [...ingredientsToEdit],
         instructions: instructions,
         tags: tags,
         //image: src,
@@ -109,6 +115,7 @@ const EditRecipe = () => {
       console.log("error");
       console.error(error);
     }
+    navigate(`/my-recipes`);
   };
 
   const handleFileChange = async (e) => {
@@ -117,7 +124,7 @@ const EditRecipe = () => {
   };
 
   useEffect(() => {
-    const { recipeToEdit } = recipeToEditStore.getState();
+    //const { recipeToEdit } = recipeToEditStore.getState();
     if (recipeToEdit.name !== "" && recipeToEdit.name !== undefined) {
       setEditName(recipeToEdit.name);
       setEditDescription(recipeToEdit.description);
@@ -135,7 +142,7 @@ const EditRecipe = () => {
         <h1>Loading...</h1>
       ) : (
         <>
-          <h3>Add recipe</h3>
+          <h3>Edit recipe</h3>
           <button onClick={submitHandler}>handler</button>
           {/*  <form onSubmit={submitHandler}> */}
           <form>
@@ -167,23 +174,23 @@ const EditRecipe = () => {
               {/* Ingredients */}
               <AddInput
                 ref={ingredientsRef}
-                onClick={() =>
-                  setIngredientsToEdit([
-                    ...ingredientsToEdit,
-                    ingredientsRef.current.value,
-                  ])
-                }
+                onClick={() => addItem(ingredientsRef, addIngredientEdit)}
                 label={"ingredients"}
                 placeholder={"new ingredient"}
               />
 
-              <ol>
-                {ingredientsToEdit.map((ingrediant) => (
+              <ol key={crypto.randomUUID()}>
+                {recipeToEdit.ingredients.map((ingrediant) => (
                   <li>
+                    {/* TODO - change AddItem to item */}
                     <AddItem
                       id={ingrediant.id}
-                      passId={() =>
-                        removeItem(ingrediant, ingredients, removeIngredient)
+                      passId={(id) =>
+                        removeItem(
+                          ingrediant,
+                          recipeToEdit.ingredients,
+                          removeIngredientEdit
+                        )
                       }
                       element={ingrediant}
                     />
@@ -219,29 +226,29 @@ const EditRecipe = () => {
               </ol>
             </div>
             <fieldset>
-              <legend>Please add a relevat tag</legend>
+              <p>Please add a relevat tag</p>
               {tagsNames.map((tagName) => {
                 let tempChecked = false;
                 tagName === recipeToEdit.tags[0] ? (tempChecked = true) : "";
                 return (
-                  <>
+                  <div id={crypto.randomUUID()} key={crypto.randomUUID()}>
                     <input
                       onChange={(e) => checkboxHandler(e, tags, setTags)}
                       type="checkbox"
-                      id={tagName}
                       checked={tempChecked}
                       value={tagName}
                     />
-                    <label for={tagName}>{tagName}</label>
+                    <label htmlFor={tagName}>{tagName}</label>
                     <br />
-                  </>
+                  </div>
                 );
               })}
             </fieldset>
-            <label for="image">Image</label>
+            <label htmlFor="image">Image</label>
             <input
               type="file"
-              id="image"
+              id={crypto.randomUUID()}
+              key={crypto.randomUUID()}
               accept="image/*"
               onChange={handleFileChange}
             />

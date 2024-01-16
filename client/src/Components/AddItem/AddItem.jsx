@@ -6,11 +6,11 @@ export const AddItem = ({ element, id, passId }) => {
   };
 
   return (
-    <li id={id} className={style["add-item-container"]}>
+    <div id={id} className={style["add-item-container"]}>
       <p>{element}</p>
       <button onClick={() => onClick(id)} type="button">
         -
       </button>
-    </li>
+    </div>
   );
 };

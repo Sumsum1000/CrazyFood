@@ -1,6 +1,6 @@
 import style from "./home.module.scss";
 import { RecipeCard } from "../../Components/Recipe/RecipeCard";
-import { FC, useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import { recipesStore } from "../../Store/_store";
 import { currentRecipeStore } from "../../Store/_store";
 import axios from "axios";

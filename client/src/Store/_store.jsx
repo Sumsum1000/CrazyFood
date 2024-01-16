@@ -59,4 +59,20 @@ export const recipeToEditStore = create((set) => ({
     //set((state) => ({ recipeToEdit: recipe }));
     set({ recipeToEdit: recipe });
   },
+  addIngredientEdit: (ingredient) => {
+    set((state) => ({
+      recipeToEdit: {
+        ...state.recipeToEdit,
+        ingredients: [...state.recipeToEdit.ingredients, ingredient],
+      },
+    }));
+  },
+  removeIngredientEdit: (updatedIngredients) => {
+    set((state) => ({
+      recipeToEdit: {
+        ...state.recipeToEdit,
+        ingredients: updatedIngredients,
+      },
+    }));
+  },
 }));

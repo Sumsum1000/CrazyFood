@@ -76,7 +76,7 @@ export const MyRecipes = () => {
         {userRecipes &&
           userRecipes.map((recipe) => {
             const url = `http://localhost:3000/all/${recipe._id}`;
-            const random = Math.random();
+            const random = crypto.randomUUID();
             return (
               <Link
                 id={random}
