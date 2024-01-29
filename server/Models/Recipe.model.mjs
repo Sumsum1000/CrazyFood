@@ -1,4 +1,4 @@
-import mongoose from "mongoose";
+import mongoose, { Types } from "mongoose";
 
 const RecipeSchema = new mongoose.Schema({
   name: {
@@ -53,7 +53,7 @@ const RecipeSchema = new mongoose.Schema({
     // required: [true, "Must provide an image"],
   },
   userId: {
-    type: String,
+    type: mongoose.Types.ObjectId,
     required: [true, "Must provide userId"],
   },
 });

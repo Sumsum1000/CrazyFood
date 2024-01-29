@@ -1,7 +1,9 @@
 import { Recipe } from "../Models/Recipe.model.mjs";
 import { User } from "../Models/User.model.mjs";
+import mongoose from "mongoose";
 //import { getUserByEmail } from "./user.controller.mjs";
 
+// Move to router
 const getUserById = async (userId) => {
   try {
     const user = await User.findOne({ userId: userId });
@@ -16,9 +18,9 @@ export const createRecipe = async (req, res) => {
 
   try {
     const user = await getUserById(userId);
-    // console.log("USER: ", user);
+    const x = new mongoose.Types.ObjectId(user.id);
 
-    const recipe = await Recipe.create({ ...req.body, userId: user._id });
+    const recipe = await Recipe.create({ ...req.body, userId: x });
     res.status(201).json({ recipe });
   } catch (error) {
     res.status(500).json({ msg: error });
