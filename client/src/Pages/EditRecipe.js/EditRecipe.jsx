@@ -35,6 +35,8 @@ const EditRecipe = () => {
     setRecipeToEdit,
     addIngredientEdit,
     removeIngredientEdit,
+    addInstructionEdit,
+    removeInstructionEdit,
   } = recipeToEditStore();
   const [isLoading, setIsLoading] = useState(true);
   const [temp, setTemp] = useState({});
@@ -68,17 +70,17 @@ const EditRecipe = () => {
 
     try {
       // --- Image update
-      // const formData = new FormData();
-      // formData.append("image", selectedImage);
-      // const {
-      //   data: {
-      //     image: { src },
-      //   },
-      // } = await axios.post(`${BASE_URL}/recipes/uploads`, formData, {
-      //   headers: {
-      //     "Content-Type": "multipart/form-data",
-      //   },
-      // });
+      const formData = new FormData();
+      formData.append("image", selectedImage);
+      const {
+        data: {
+          image: { src },
+        },
+      } = await axios.post(`${BASE_URL}/recipes/uploads`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
 
       const newRecipe = {
         name: nameRef.current.value,
@@ -88,11 +90,11 @@ const EditRecipe = () => {
         ingredients: [...ingredientsToEdit],
         instructions: instructions,
         tags: tags,
-        //image: src,
+        image: src,
       };
       console.log("newRecipe^^^^ ", newRecipe);
 
-      patchRecipe(newRecipe);
+      //patchRecipe(newRecipe);
     } catch (error) {
       console.error(error);
       //return res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
@@ -181,7 +183,7 @@ const EditRecipe = () => {
 
               <ol key={crypto.randomUUID()}>
                 {recipeToEdit.ingredients.map((ingrediant) => (
-                  <li>
+                  <li key={crypto.randomUUID()}>
                     {/* TODO - change AddItem to item */}
                     <AddItem
                       id={ingrediant.id}
@@ -203,29 +205,32 @@ const EditRecipe = () => {
               {/* Instructions */}
               <AddInput
                 ref={instructionsRef}
-                onClick={() => addItem(instructionsRef, addInstruction)}
+                onClick={() => addItem(instructionsRef, addInstructionEdit)}
                 label={"instructions"}
                 placeholder={"new instrcution"}
               />
-              <ol>
+              <ul>
                 {recipeToEdit.instructions.map((instruction) => (
-                  <div>
-                    <AddItem
-                      id={instruction.id}
-                      passId={() =>
-                        removeItem(
-                          instruction,
-                          instructions,
-                          removeInstructions
-                        )
-                      }
-                      element={instruction}
-                    />
-                  </div>
+                  <li>
+                    <div>
+                      <AddItem
+                        id={instruction.id}
+                        passId={() =>
+                          removeItem(
+                            instruction,
+                            instructions,
+                            removeInstructions
+                          )
+                        }
+                        element={instruction}
+                      />
+                    </div>
+                  </li>
                 ))}
-              </ol>
+              </ul>
             </div>
             <fieldset>
+              {/* Tag */}
               <p>Please add a relevat tag</p>
               {tagsNames.map((tagName) => {
                 let tempChecked = false;
@@ -235,11 +240,11 @@ const EditRecipe = () => {
                     <input
                       onChange={(e) => checkboxHandler(e, tags, setTags)}
                       type="checkbox"
-                      checked={tempChecked}
+                      //checked={tempChecked}
                       value={tagName}
                     />
                     <label htmlFor={tagName}>{tagName}</label>
-                    <br />
+                    {/* <br /> */}
                   </div>
                 );
               })}

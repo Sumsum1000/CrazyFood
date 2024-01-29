@@ -75,4 +75,20 @@ export const recipeToEditStore = create((set) => ({
       },
     }));
   },
+  addInstructionEdit: (instruction) => {
+    set((state) => ({
+      recipeToEdit: {
+        ...state.recipeToEdit,
+        instructions: [...state.recipeToEdit.instructions, instruction],
+      },
+    }));
+  },
+  removeInstructionEdit: (updatedInstructions) => {
+    set((state) => ({
+      recipeToEdit: {
+        ...state.recipeToEdit,
+        instructions: updatedInstructions,
+      },
+    }));
+  },
 }));

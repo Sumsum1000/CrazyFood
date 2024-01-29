@@ -52,6 +52,10 @@ const RecipeSchema = new mongoose.Schema({
     type: String,
     // required: [true, "Must provide an image"],
   },
+  userId: {
+    type: String,
+    required: [true, "Must provide userId"],
+  },
 });
 
 export const Recipe = mongoose.model("Recipe", RecipeSchema);

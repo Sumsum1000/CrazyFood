@@ -13,7 +13,7 @@ import {
 } from "../Controllers/recipe.controller.mjs";
 import { uploadRecipeImage } from "../Controllers/upload.controller.mjs";
 
-recipeRouter.post("/", (req, res) => {
+recipeRouter.post("/user-email/:userid", (req, res) => {
   createRecipe(req, res);
 });
 

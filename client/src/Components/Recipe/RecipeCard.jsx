@@ -1,5 +1,5 @@
 import style from "./RecipeCard.module.scss";
-import { recipesArr } from "../../TempData";
+//import { recipesArr } from "../../TempData";
 import { Link } from "react-router-dom";
 
 export const RecipeCard = ({

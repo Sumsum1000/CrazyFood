@@ -96,13 +96,16 @@ export const Auth = () => {
     const { token } = response.data;
     const userName = response.data.user.name;
     const userId = response.data.user.userId;
+    const userEmail = response.data.user.email;
 
     setToken(token);
     setLogin(true);
 
     localStorage.setItem("token", token);
     localStorage.setItem("userName", userName);
-    //console.log("userId: ", userId);
+    localStorage.setItem("useriD", userId);
+    // TODO - ENCRYPT EMAIL
+    localStorage.setItem("email", userEmail);
 
     setUserId(userId);
     setUserName(localStorage.getItem("userName"));

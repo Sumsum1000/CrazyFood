@@ -1,3 +1,7 @@
+import axios from "axios";
+
+const BASE_URL = "http://localhost:8080/api/v1";
+
 export const removeItem = (nameToRemove, arr, updateState) => {
   for (let element of arr) {
     if (element === nameToRemove) {
@@ -22,6 +26,36 @@ export const resetRecipe = (nameRef, descriptioneRef, resetIng, resetIns) => {
   descriptioneRef.current.value = "";
   resetIng();
   resetIns();
+};
+
+// export const postRecipe = async (newRecipe) => {
+//   console.log("post newRecipe ", newRecipe);
+//   try {
+//     axios
+//       .post(`${BASE_URL}/recipes`, newRecipe)
+//       .then(function (response) {
+//         console.log(response);
+//       })
+//       .catch(function (error) {
+//         console.log(error);
+//       });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
+
+export const postRecipe = async (newRecipe) => {
+  const userId = localStorage.getItem("userId");
+  try {
+    axios
+      .post(`${BASE_URL}/recipes/user-email/${userId}`, newRecipe)
+      .then(function (response) {})
+      .catch(function (error) {
+        console.log(error);
+      });
+  } catch (error) {
+    console.error(error);
+  }
 };
 
 export const checkboxHandler = (e, arr, setTags) => {

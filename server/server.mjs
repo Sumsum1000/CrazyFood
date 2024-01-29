@@ -5,6 +5,7 @@ import "dotenv/config";
 import { userRouter } from "./routes/user.router.mjs";
 import { authRouter } from "./routes/auth.router.mjs";
 import { recipeRouter } from "./routes/recipe.router.mjs";
+import { testRouter } from "./routes/test.router.mjs";
 import { errorHandlerMiddleware } from "./middleware/error-handler.mjs";
 import fileUpload from "express-fileupload";
 
@@ -27,6 +28,7 @@ app.use(fileUpload());
 app.use("/api/v1/auth", authRouter); // auth
 app.use("/api/v1/recipes", recipeRouter);
 app.use("/api/v1/users", userRouter);
+app.use("/api/v1/test", testRouter);
 app.use(errorHandlerMiddleware);
 
 app.all("*", (req, res) => {

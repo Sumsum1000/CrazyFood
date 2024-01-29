@@ -12,10 +12,9 @@ import {
   resetRecipe,
   checkboxHandler,
 } from "./RecipeUtils";
-const BASE_URL = "http://localhost:8080/api/v1";
 
 const AddRecipe = () => {
-  //const BASE_URL = "http://localhost:8080/api/v1";
+  const BASE_URL = "http://localhost:8080/api/v1";
   const tagsNames = [
     "Beef",
     "Chicken",
@@ -45,26 +44,69 @@ const AddRecipe = () => {
 
   const [tags, setTags] = useState([]);
   const [selectedImage, setSelectedImage] = useState();
-  const [newRecipe, setNewRecipe] = useState({});
-  const [canUpdate, setCanUpdate] = useState(false);
   //const [imageValue, setImageValue] = useState();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
-    //debugger;
-    // Define new recipe
-    setNewRecipe((state) => ({
-      ...state,
-      name: nameRef.current.value,
-      description: descriptioneRef.current.value,
-      prepTime: 14,
-      cookTime: 15,
-      ingredients: ingredients,
-      instructions: instructions,
-      tags: tags,
-      //image: src,
-    }));
+
+    // Get user ID
+    try {
+      const formData = new FormData();
+      formData.append("image", selectedImage);
+      const {
+        data: {
+          image: { src },
+        },
+      } = await axios.post(`${BASE_URL}/recipes/uploads`, formData, {
+        headers: {
+          "Content-Type": "multipart/form-data",
+        },
+      });
+      console.log("src: ", src);
+      //setImageValue(src);
+
+      //setImageValue(null);
+
+      const newRecipe = {
+        name: nameRef.current.value,
+        description: descriptioneRef.current.value,
+        prepTime: 14,
+        cookTime: 15,
+        ingredients: ingredients,
+        instructions: instructions,
+        tags: tags,
+        image: src,
+        //userId: ''
+      };
+
+      postRecipe(newRecipe);
+      resetRecipe(
+        nameRef,
+        descriptioneRef,
+        resetIngredients,
+        resetInstructions
+      );
+    } catch (error) {
+      console.error(error);
+      //return res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+    }
   };
+
+  // const postRecipe = async (newRecipe) => {
+  //   console.log("post newRecipe ", newRecipe);
+  //   try {
+  //     axios
+  //       .post(`${BASE_URL}/recipes`, newRecipe)
+  //       .then(function (response) {
+  //         console.log(response);
+  //       })
+  //       .catch(function (error) {
+  //         console.log(error);
+  //       });
+  //   } catch (error) {
+  //     console.error(error);
+  //   }
+  // };
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
@@ -74,15 +116,6 @@ const AddRecipe = () => {
   // useEffect(() => {
   //   console.log("selected file ", selectedImage);
   // }, [selectedImage]);
-
-  useEffect(() => {
-    //console.log("newRecipe:%% ", newRecipe);
-    setCanUpdate(true);
-    if (canUpdate) {
-      postRecipe(newRecipe);
-      setCanUpdate(false);
-    }
-  }, [newRecipe]);
 
   return (
     <div className={style["add-container"]}>

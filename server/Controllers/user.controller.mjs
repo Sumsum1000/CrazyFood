@@ -21,12 +21,23 @@ export const getAllUsers = async (req, res) => {
 };
 
 export const getUser = async (req, res) => {
-  const { email, password, id } = req.params;
-  if (!email || !password) {
-    res.status(401).json({ msg: "no password or email" });
-  }
+  // const { email, password, id } = req.params;
+  // if (!email || !password) {
+  //   res.status(401).json({ msg: "no password or email!" });
+  // }
   try {
-    const user = User.findOne({ _id: id });
+    const { id } = req.params;
+    const user = await User.findOne({ _id: id });
+    res.status(200).json({ user });
+  } catch (error) {
+    res.status(500).json({ msg: error });
+  }
+};
+
+export const getUserByEmail = async (req, res) => {
+  try {
+    const { email } = req.params;
+    const user = await User.findOne({ email: email });
     res.status(200).json({ user });
   } catch (error) {
     res.status(500).json({ msg: error });

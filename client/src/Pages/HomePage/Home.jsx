@@ -57,7 +57,6 @@ export const Home = () => {
       quantity: currentTags[key],
       id: Math.random(),
     }));
-    //console.log("tempArr ", tempArr);
     setTagsArr(tempArr);
   }, [currentTags]);
 
