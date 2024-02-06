@@ -65,10 +65,17 @@ const EditRecipe = () => {
   const [tagToEdit, setTagToEdit] = useState("");
   const [ingredientsToEdit, setIngredientsToEdit] = useState([]);
 
+  const test = () => {
+    console.log("RECIPETOEDIT: ", recipeToEdit._id);
+  };
+
   const submitHandler = async (e) => {
     e.preventDefault();
 
     try {
+      // get recipe
+      // get recipe id
+
       // --- Image update
       const formData = new FormData();
       formData.append("image", selectedImage);
@@ -76,11 +83,17 @@ const EditRecipe = () => {
         data: {
           image: { src },
         },
-      } = await axios.post(`${BASE_URL}/recipes/uploads`, formData, {
-        headers: {
-          "Content-Type": "multipart/form-data",
-        },
-      });
+      } = await axios.patch(
+        //${recipeToEdit.id}
+        `${BASE_URL}/recipes/645df8689ffcafc6e586348e`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+          },
+        }
+      );
+      console.log("RECIPE TO EDIT: ", recipeToEdit.id);
 
       const newRecipe = {
         name: nameRef.current.value,
@@ -145,7 +158,7 @@ const EditRecipe = () => {
       ) : (
         <>
           <h3>Edit recipe</h3>
-          <button onClick={submitHandler}>handler</button>
+          <button onClick={test}>handler</button>
           {/*  <form onSubmit={submitHandler}> */}
           <form>
             <div>

@@ -49,9 +49,23 @@ const AddRecipe = () => {
   const [canUpdate, setCanUpdate] = useState(false);
   //const [imageValue, setImageValue] = useState();
 
-  const submitHandler = (e) => {
+  const submitHandler = async (e) => {
     e.preventDefault();
     //debugger;
+
+    const formData = new FormData();
+    formData.append("image", selectedImage);
+    const {
+      data: {
+        image: { src },
+      },
+    } = await axios.post(`${BASE_URL}/recipes/uploads`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data",
+      },
+    });
+    console.log("src: ", src);
+
     // Define new recipe
     setNewRecipe((state) => ({
       ...state,
@@ -62,7 +76,7 @@ const AddRecipe = () => {
       ingredients: ingredients,
       instructions: instructions,
       tags: tags,
-      //image: src,
+      image: src,
     }));
   };
 

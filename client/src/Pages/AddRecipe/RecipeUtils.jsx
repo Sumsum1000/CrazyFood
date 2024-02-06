@@ -68,3 +68,18 @@ export const checkboxHandler = (e, arr, setTags) => {
   }
   console.log("arr ", arr);
 };
+
+// export const getRecipe = async () => {
+//   try {
+//     axios
+//       .patch(`${BASE_URL}/recipes/${recipeId}`)
+//       .then(function (response) {
+//         console.log("getRecipe: ", response);
+//       })
+//       .catch(function (error) {
+//         console.log(error);
+//       });
+//   } catch (error) {
+//     console.error(error);
+//   }
+// };
