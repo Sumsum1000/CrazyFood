@@ -12,7 +12,8 @@ import fileUpload from "express-fileupload";
 import { authMiddleware } from "./middleware/authentication.mjs";
 
 const PORT = process.env.PORT || 8080;
-const mongo_uri = process.env.MONGO_URI;
+//const mongo_uri = process.env.MONGO_URI;
+const mongo_uri = "process.env.MONGO_URI";
 
 // setup static and middleware
 
