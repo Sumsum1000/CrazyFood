@@ -82,6 +82,7 @@ const AddRecipe = () => {
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
+    console.log("file: ", file);
     setSelectedImage(file);
   };
 
@@ -90,7 +91,6 @@ const AddRecipe = () => {
   // }, [selectedImage]);
 
   useEffect(() => {
-    //console.log("newRecipe:%% ", newRecipe);
     setCanUpdate(true);
     if (canUpdate) {
       postRecipe(newRecipe);
@@ -185,7 +185,7 @@ const AddRecipe = () => {
             </div>
           ))}
         </fieldset>
-        <label for="image">Image</label>
+        <label htmlFor="image">Image</label>
         <input
           type="file"
           id="image"

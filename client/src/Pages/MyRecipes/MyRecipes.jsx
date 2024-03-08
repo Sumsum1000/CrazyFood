@@ -7,6 +7,7 @@ import {
   currentRecipeStore,
   myRecipesStore,
   recipeToEditStore,
+  recipesStore,
 } from "../../Store/_store";
 import { Link } from "react-router-dom";
 import { useNavigate } from "react-router-dom";
@@ -14,6 +15,7 @@ import { RecipeCard } from "../../Components/Recipe/RecipeCard";
 
 export const MyRecipes = () => {
   const navigate = useNavigate();
+  const { setRecipes, recipes } = recipesStore();
   const { currentRecipe, setCurrentRecipe } = currentRecipeStore();
   const { recipeToEdit, setRecipeToEdit } = recipeToEditStore();
   const [userRecipes, setUserRecipes] = useState([]);
@@ -69,7 +71,7 @@ export const MyRecipes = () => {
     } catch (error) {
       console.log(error);
     }
-  }, [userId]);
+  }, [userId, recipes]);
 
   return (
     <div className={style["all-container"]}>

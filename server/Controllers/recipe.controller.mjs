@@ -15,12 +15,12 @@ const getUserById = async (userId) => {
 
 export const createRecipe = async (req, res) => {
   const { userId } = req.params;
-
+  // id was x
   try {
     const user = await getUserById(userId);
-    const x = new mongoose.Types.ObjectId(user.id);
+    const id = new mongoose.Types.ObjectId(user.id);
 
-    const recipe = await Recipe.create({ ...req.body, userId: x });
+    const recipe = await Recipe.create({ ...req.body, userId: id });
     res.status(201).json({ recipe });
   } catch (error) {
     res.status(500).json({ msg: error });

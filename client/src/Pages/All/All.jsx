@@ -39,7 +39,7 @@ export const All = () => {
                 <RecipeCard
                   title={recipe.name}
                   id={recipe._id}
-                  key={Math.floor(Math.random())}
+                  key={crypto.randomUUID()}
                   //http://localhost:8080/uploads/Onion%20soup.jpg
                   src={`http://localhost:8080/${recipe.image}`}
                   prepTime={recipe.prepTime}

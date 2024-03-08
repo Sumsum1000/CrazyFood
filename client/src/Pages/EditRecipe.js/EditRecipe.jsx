@@ -5,6 +5,7 @@ import { AddItem } from "../../Components/AddItem/AddItem";
 import { ingredientsStore } from "../../Store/_ingredientsStore";
 import { instructionsStore } from "../../Store/_instructionsStore";
 import { recipeToEditStore } from "../../Store/_store";
+
 import { AddInput } from "../../Components/AddInput/AddInput";
 import { useNavigate } from "react-router-dom";
 import {
@@ -39,7 +40,6 @@ const EditRecipe = () => {
     removeInstructionEdit,
   } = recipeToEditStore();
   const [isLoading, setIsLoading] = useState(true);
-  const [temp, setTemp] = useState({});
   const nameRef = useRef();
   const descriptioneRef = useRef();
   const ingredientsRef = useRef();
@@ -57,44 +57,38 @@ const EditRecipe = () => {
 
   const [tags, setTags] = useState([]);
   const [selectedImage, setSelectedImage] = useState();
-  //const [imageValue, setImageValue] = useState();
 
   const [editName, setEditName] = useState("");
   const [editDescription, setEditDescription] = useState("");
-  const [editIngrediants, setEditIngrediants] = useState([]);
   const [tagToEdit, setTagToEdit] = useState("");
   const [ingredientsToEdit, setIngredientsToEdit] = useState([]);
+  const [update, setUpdate] = useState(null);
 
-  const test = () => {
-    console.log("RECIPETOEDIT: ", recipeToEdit._id);
-  };
-
-  const submitHandler = async (e) => {
-    e.preventDefault();
-
+  const test = async () => {
     try {
-      // get recipe
-      // get recipe id
+      let imageUrl; // Variable to hold the image URL
 
-      // --- Image update
-      const formData = new FormData();
-      formData.append("image", selectedImage);
-      const {
-        data: {
-          image: { src },
-        },
-      } = await axios.patch(
-        //${recipeToEdit.id}
-        `${BASE_URL}/recipes/645df8689ffcafc6e586348e`,
-        formData,
-        {
-          headers: {
-            "Content-Type": "multipart/form-data",
-          },
-        }
-      );
-      console.log("RECIPE TO EDIT: ", recipeToEdit.id);
+      // Check if a new image is selected
+      if (selectedImage) {
+        // Upload the new image
+        const formData = new FormData();
+        formData.append("image", selectedImage);
+        const response = await axios.post(
+          `${BASE_URL}/recipes/uploads`,
+          formData,
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+            },
+          }
+        );
+        imageUrl = response.data.image.src;
+      } else {
+        // If no new image is selected, use the existing image URL
+        imageUrl = recipeToEdit.image;
+      }
 
+      // Create the new recipe object
       const newRecipe = {
         name: nameRef.current.value,
         description: descriptioneRef.current.value,
@@ -103,53 +97,46 @@ const EditRecipe = () => {
         ingredients: [...ingredientsToEdit],
         instructions: instructions,
         tags: tags,
-        image: src,
+        image: imageUrl, // Use the image URL
+        _id: recipeToEdit._id,
       };
-      console.log("newRecipe^^^^ ", newRecipe);
 
-      //patchRecipe(newRecipe);
+      // Update the recipe on the backend
+      const response = await axios.patch(
+        `${BASE_URL}/recipes/${recipeToEdit._id}`,
+        newRecipe
+      );
+      console.log("Updated recipe:", response.data);
+
+      // Navigate to the My Recipes page
+      navigate(`/my-recipes`);
     } catch (error) {
       console.error(error);
-      //return res.status(StatusCodes.BAD_REQUEST).json({ error: error.message });
+      // Handle errors here
     }
-  };
-
-  const patchRecipe = async (newRecipe) => {
-    //console.log("recipeToEdit:===== ", recipeToEdit);
-
-    try {
-      await axios
-        .patch(`${BASE_URL}/recipes/${recipeToEdit._id}`, newRecipe)
-        .then(function (response) {
-          console.log(response);
-        })
-        .catch(function (error) {
-          console.log(error);
-        });
-    } catch (error) {
-      console.log("error");
-      console.error(error);
-    }
-    navigate(`/my-recipes`);
   };
 
   const handleFileChange = async (e) => {
     const file = e.target.files[0];
     setSelectedImage(file);
+    console.log("file: ", file);
   };
 
+  // Stop loading if recipeToEdit
   useEffect(() => {
-    //const { recipeToEdit } = recipeToEditStore.getState();
-    if (recipeToEdit.name !== "" && recipeToEdit.name !== undefined) {
-      setEditName(recipeToEdit.name);
-      setEditDescription(recipeToEdit.description);
-      setTagToEdit(recipeToEdit.tags[0]);
-      setIngredientsToEdit(recipeToEdit.ingredients);
-
-      setIsLoading(false);
-    }
-    console.log("recipeToEdit---", recipeToEdit);
+    console.log("recipeToEdit: ", recipeToEdit);
+    const x = recipeToEdit.image;
+    setSelectedImage(x);
+    setIsLoading(false);
   }, [recipeToEdit]);
+
+  useEffect(() => {
+    console.log("Hello: ", recipeToEdit);
+  }, [recipeToEdit]);
+
+  useEffect(() => {
+    setSelectedImage();
+  }, []);
 
   return (
     <div className={style["add-container"]}>
@@ -167,7 +154,7 @@ const EditRecipe = () => {
                 id="name"
                 type="text"
                 name="name"
-                defaultValue={editName}
+                defaultValue={recipeToEdit.name}
                 placeholder="Recipe name"
                 ref={nameRef}
               />
@@ -179,7 +166,7 @@ const EditRecipe = () => {
                 id="description"
                 type="text"
                 name="description"
-                defaultValue={editDescription}
+                defaultValue={recipeToEdit.description}
                 placeholder="Recipe description"
                 ref={descriptioneRef}
               />

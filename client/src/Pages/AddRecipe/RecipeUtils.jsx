@@ -58,6 +58,17 @@ export const postRecipe = async (newRecipe) => {
   }
 };
 
+const patchRecipe = async (BASE_URL, id, recipe) => {
+  axios
+    .patch(`${BASE_URL}/recipes/${id}`, recipe)
+    .then((response) => {
+      console.log("response: ", response);
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+};
+
 export const checkboxHandler = (e, arr, setTags) => {
   if (!arr.includes(e.target.value) && e.target.checked) {
     setTags([...arr, e.target.value]);

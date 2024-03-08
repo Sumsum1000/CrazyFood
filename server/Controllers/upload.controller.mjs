@@ -9,6 +9,7 @@ export const uploadRecipeImage = async (req, res) => {
     throw new BadRequestError("Must provide an image");
   }
 
+  console.log("req: ", req.files);
   const recipeImage = req.files.image;
   console.log("recipeImage: ", recipeImage);
 
