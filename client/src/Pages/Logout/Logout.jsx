@@ -20,9 +20,9 @@ export const Logout = () => {
 
   return (
     <div className={style["logout-container"]}>
-      <p>Do you realy want to logout?</p>
+      {/* <p>Do you realy want to logout?</p>
       <button onClick={yesHandler}>yes</button>
-      <button onClick={noHandler}>no</button>
+      <button onClick={noHandler}>no</button> */}
     </div>
   );
 };

@@ -35,13 +35,6 @@ export const MyRecipes = () => {
     }).then((data) => setCurrentRecipe(data.data.recipe));
   };
 
-  // const getRecipeDetails = (id) => {
-  //   axios({
-  //     method: "get",
-  //     url: `http://localhost:8080/api/v1/recipes/${id}`,
-  //   }).then((data) => setCurrentRecipe(data.data.recipe));
-  // };
-
   const editRecipeHandler = async (e, id) => {
     e.stopPropagation();
     e.preventDefault();
