@@ -9,6 +9,10 @@ export const Logout = () => {
 
   const yesHandler = () => {
     setLogin(false);
+    localStorage.setItem("userName", null);
+    localStorage.setItem("email", null);
+    localStorage.setItem("useriD", null);
+    localStorage.setItem("isLoggedIn", "false");
     localStorage.removeItem("token");
     setUserName("guest");
     navigate("/");
@@ -20,9 +24,9 @@ export const Logout = () => {
 
   return (
     <div className={style["logout-container"]}>
-      {/* <p>Do you realy want to logout?</p>
+      <p>Do you realy want to logout?</p>
       <button onClick={yesHandler}>yes</button>
-      <button onClick={noHandler}>no</button> */}
+      <button onClick={noHandler}>no</button>
     </div>
   );
 };

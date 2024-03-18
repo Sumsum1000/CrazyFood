@@ -104,6 +104,7 @@ export const Auth = () => {
     localStorage.setItem("token", token);
     localStorage.setItem("userName", userName);
     localStorage.setItem("useriD", userId);
+    localStorage.setItem("isLoggedIn", "true");
     // TODO - ENCRYPT EMAIL
     localStorage.setItem("email", userEmail);
 
@@ -112,6 +113,8 @@ export const Auth = () => {
     navigate("/");
     return token;
   };
+
+  useEffect(() => {}, []);
 
   useEffect(() => {
     setIsError(false);

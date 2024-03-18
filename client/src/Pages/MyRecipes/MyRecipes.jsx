@@ -58,13 +58,22 @@ export const MyRecipes = () => {
     navigate("./edit");
   };
 
+  // useEffect(() => {
+  //   try {
+  //     fetchRecipesByUserId(userId);
+  //   } catch (error) {
+  //     console.log(error);
+  //   }
+  // }, [userId, recipes]);
+
   useEffect(() => {
     try {
-      fetchRecipesByUserId(userId);
+      const x = localStorage.getItem("useriD");
+      fetchRecipesByUserId(x);
     } catch (error) {
       console.log(error);
     }
-  }, [userId, recipes]);
+  }, []);
 
   return (
     <div className={style["all-container"]}>

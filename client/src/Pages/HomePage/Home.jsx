@@ -7,17 +7,32 @@ import axios from "axios";
 import { Link } from "react-router-dom";
 import { Tag } from "../../Components/Tags/Tag";
 import { selectedTagStore } from "../../Store/_store";
+import { authStore } from "../../Store/_authStore";
 
 //import { Recipe } from "../../Store/types";
 //import { RootState } from "../../Store/types";
 
 export const Home = () => {
+  const { isLogedIn, setLogin, userName, setUserName } = authStore();
   const { recipes, setRecipes } = recipesStore();
   const { currentRecipe, setCurrentRecipe } = currentRecipeStore();
   const { selectedTag, setSelectedTag } = selectedTagStore();
   const [currentTags, setCurrenTags] = useState({});
   const [tagsArr, setTagsArr] = useState([]);
   const [recipeStart, setRecipeStart] = useState([]);
+
+  //------------
+
+  // const temp1 = async () => {
+
+  // };
+
+  // useEffect(() => {
+  //   console.log("onStart1: ", isLogedIn);
+  //   console.log("onStart2: ", userName);
+  // }, [isLogedIn, userName]);
+
+  //--------------
 
   const fetchRecipe = (id) => {
     axios({
