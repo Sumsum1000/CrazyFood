@@ -9,7 +9,7 @@ export const register = async (req, res) => {
     const { name, password, email } = req.body;
 
     if (!name || !password || !email) {
-      throw new BadRequestError("Invalid cradentials");
+      throw new BadRequestError("Check your input fields");
     }
 
     const user = await User.create({ ...req.body });

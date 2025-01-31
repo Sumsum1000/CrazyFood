@@ -13,7 +13,7 @@ import { authMiddleware } from "./middleware/authentication.mjs";
 
 const PORT = process.env.PORT || 8080;
 //const mongo_uri = process.env.MONGO_URI;
-const mongo_uri = "process.env.MONGO_URI";
+const mongo_uri = 'mongodb+srv://Niko_4001:eQqDLVwHthqTTgYL@cluster0.oqvv4.mongodb.net/CrazyFood?retryWrites=true&w=majority';
 
 // setup static and middleware
 
