@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { BrowserRouter as Router, Route, Routes } from "react-router-dom";
 import style from "./app.module.scss";
 
@@ -14,9 +14,28 @@ import AddRecipe from "./Pages/AddRecipe/AddRecipe";
 import { Logout } from "./Pages/Logout/Logout";
 import { MyRecipes } from "./Pages/MyRecipes/MyRecipes";
 import EditRecipe from "./Pages/EditRecipe.js/EditRecipe";
+import { authStore } from "./Store/_authStore";
 
 function App() {
-  //const [count, setCount] = useState(0);
+
+   const {
+      setLogin,
+      setUserId,
+      setUserName,
+      setToken,
+    } = authStore();
+
+  useEffect(() => { 
+    const token = localStorage.getItem("token");
+    const userName = localStorage.getItem("userName");
+    const userId = localStorage.getItem("userId");
+    const email = localStorage.getItem("email");
+
+    setToken(token);
+    setLogin(true);
+    setUserId(userId);
+    setUserName(localStorage.getItem("userName"));
+  }, []);
 
   return (
     <div className={style["container"]}>

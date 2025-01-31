@@ -6,6 +6,7 @@ export const authStore = create((set) => ({
     userName: "guest",
     token: "",
     userId: "",
+    email: "",
   },
   setLogin: (isLogedIn) => {
     set((state) => ({ isLogedIn: isLogedIn }));
@@ -18,5 +19,8 @@ export const authStore = create((set) => ({
   },
   setUserId: (userId) => {
     set((state) => ({ userId: userId }));
+  },
+  setUEmail: (userEmail) => {
+    set((state) => ({ email: userEmail }));
   },
 }));
